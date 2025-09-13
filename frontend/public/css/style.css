@@ -1,0 +1,198 @@
+* {
+    font-family: "Quicksand", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: normal;
+    font-style: normal;
+    color: white;
+    font-size: 16px;
+}
+
+body {
+    background: #10131b;
+    margin: 0;
+}
+
+.weight-600 {
+    font-weight: 600;
+}
+
+input, select, button, .pill {
+    background-color: #212329;
+    border-style: none;
+    outline: none;
+}
+
+button, select {
+    cursor: pointer;
+}
+
+.header-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 3rem;
+    padding: 0 2rem;
+    z-index: 100;
+    background-color: #10131b;
+    border-bottom: 1px solid #393c4a;
+}
+
+.header-container p {
+    font-size: large;
+    font-weight: bold;
+    line-height: 0;
+}
+
+.app-container {
+    position: relative;
+    margin-top: 6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.app-container h1 {
+    font-weight: 700;
+    font-size: 48px;
+}
+
+.app-container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 1rem;
+}
+
+.generator-form {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    width: 80%;
+    max-width: 48rem;
+    min-width: 8rem;
+    margin: 0 auto;
+}
+
+.generator-input-field {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    width: 100%;
+    height: 3.5rem;
+    padding: 0;
+    border-radius: 999px;
+    background-color: #212329;
+    box-shadow:
+        inset -1px -1px 1px 0px rgba(0, 0, 0, 0.3),
+        inset 1px 1px 1px 0px rgba(255, 255, 255, 0.3);
+}
+
+.generator-input-field input {
+    background-color: transparent;
+    padding-left: 1.5rem;
+}
+
+.generator-input-field button {
+    position: relative;
+    z-index: 0;
+    height: 2.5rem;
+    margin-right: 0.5rem;
+    padding: 0 1rem;
+    border-radius: 999px;
+    background: linear-gradient(270deg, #5865F2, #a626d0);
+    background-size: 400% 400%;
+    animation: gradient-rotate 8s ease infinite;
+    color: white;
+    border: none;
+    cursor: pointer;
+    box-shadow:
+        inset -1px -1px 1px 0px rgba(0, 0, 0, 0.3),
+        inset 1px 1px 1px 0px rgba(255, 255, 255, 0.3),
+        0 4px 15px rgba(88, 101, 242, 0.4);
+    transition: transform 0.2s ease;
+}
+
+@keyframes gradient-rotate {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.btn-send:disabled {
+    box-shadow:
+        inset -1px -1px 1px 0px rgba(0, 0, 0, 0.1),
+        inset 1px 1px 1px 0px rgba(255, 255, 255, 0.1);
+}
+
+.generator-input-options {
+    display: flex;
+    justify-content: space-between;
+    width: calc(100% - 2rem);
+    max-width: 36rem;
+    gap: 1rem;
+}
+
+@media (max-width: 720px) {
+    /*
+    .generator-input-options {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+    }
+    */
+}
+
+.generator-input-options input[type="number"] {
+    padding: 0.25rem;
+    border: 1px solid #393c4a;
+    text-align: center;
+}
+
+.generator-input-options input[type="number"]::-webkit-inner-spin-button,
+.generator-input-options input[type="number"]::-webkit-outer-spin-button {
+    display: none;
+}
+
+.generator-input-options>div {
+    display: flex;
+    flex-direction: column;
+    align-items: ce;
+    row-gap: 0.5rem;
+}
+
+.generator-input-options>div>label {
+    font-weight: 600;
+    margin-left: 1px;
+}
+
+.results-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.results-container h2 {
+    font-size: x-large;
+    font-weight: 600;
+}
+
+.flashcards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 16rem);
+    grid-gap: 10px;
+    justify-content: center;
+    row-gap: 1rem;
+    width: 80%;
+}

@@ -1,0 +1,61 @@
+.flashcard {
+    width: 16rem;
+    height: 10rem;
+}
+
+.flashcard-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.flashcard:hover .flashcard-inner {
+    transform: rotateX(180deg);
+}
+
+.flashcard-front,
+.flashcard-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    background-color: #f0f0e9;
+    border-radius: 1rem;
+    box-sizing: border-box;
+}
+
+.flashcard-front p {
+    font-weight: 600;
+}
+
+.flashcard-front {
+    overflow: hidden;
+}
+
+.flashcard-left-border {
+    position: absolute;
+    display: inline-block;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 10px;
+}
+
+.flashcard-back {
+    transform: rotateX(180deg);
+}
+
+.flashcard p {
+    color: black;
+    font-size: 1rem;
+    margin: 0;
+    text-align: center;
+}

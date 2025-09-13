@@ -1,4 +1,4 @@
-import { requestFlashcards } from "./api.js";
+import { requestDeck } from "./api.js";
 import { drawFlashcards } from "./ui.js";
 
 const sampleFlashcards = [
@@ -38,7 +38,6 @@ const sampleFlashcards = [
 
 export async function requestAndDrawFlashcards() {
     // const data = sampleFlashcards;
-
-    const data = await requestFlashcards();
+    const data = await requestDeck();
     drawFlashcards(data);
 }

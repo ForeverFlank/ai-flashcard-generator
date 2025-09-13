@@ -1,44 +1,31 @@
-import Groq from "groq-sdk";
+import { GoogleGenAI } from "@google/genai";
 import { systemPrompt } from "./system-prompt.js";
 
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+const ai = new GoogleGenAI({
+    apiKey: process.env.GEMINI_API_KEY,
+});
 
-export async function generateFlashcardJSON(data) {
-    const topic = data.topic;
-    const cardCount = data.cardCount;
-    const contentLength = data.contentLength;
-    const difficulty = data.difficulty;
+export async function generateDeckJSONFromLLM(data) {
+    const { topic, cardCount, contentLength, difficulty } = data;
 
-
-    const chatCompletion = await groq.chat.completions.create({
-        messages: [
-            { role: "system", content: systemPrompt },
+    const chat = ai.chats.create({
+        model: "gemini-2.5-flash",
+        history: [
             {
-                role: "user",
-                content: `
-                    Topic: ${topic},
-                    Count: ${cardCount},
-                    Length: ${contentLength},
-                    Difficulty: ${difficulty}
-                `
+                role: "model",
+                parts: [{ text: systemPrompt }],
             },
         ],
-        model: "llama-3.1-8b-instant",
-        temperature: 1,
-        max_completion_tokens: 1024,
-        top_p: 1,
-        stream: true,
-        stop: null
     });
 
-    let fullResponse = "";
+    const response = await chat.sendMessage({
+        message: `
+            Topic: ${topic}
+            Count: ${cardCount}
+            Length: ${contentLength}
+            Difficulty: ${difficulty}
+        `.trim(),
+    });
 
-    for await (const chunk of chatCompletion) {
-        const content = chunk.choices[0]?.delta?.content;
-        if (content) {
-            fullResponse += content;
-        }
-    }
-
-    return fullResponse;
+    return response.text;
 }

@@ -1,25 +1,39 @@
+"use strict";
+
+import { Deck } from "./deck.js";
+
 const BACKEND_URL = "http://localhost:3222"
 
-export async function requestFlashcards() {
-    const userInput = document.getElementById("input-topic").value.trim();
-    const cardCount = document.getElementById("input-card-count").value;
-    const contentLength = document.getElementById("input-length").value;
-    const difficulty = document.getElementById("input-difficulty").value;
+export async function requestDeck() {
+    const topic = document.getElementById("input-topic").value.trim();
+    const count = document.getElementById("input-card-count").value;
+    const length = document.querySelector('input[name="length"]:checked')?.value;
+    const difficulty = document.querySelector('input[name="difficulty"]:checked')?.value;
 
-    const body = {
-        topic: userInput,
-        cardCount: cardCount,
-        contentLength: contentLength,
-        difficulty: difficulty
+    const requestBody = {
+        topic,
+        cardCount: count,
+        contentLength: length,
+        difficulty,
     };
 
-    const res = await fetch(`${BACKEND_URL}/flashcards`, {
+    const token = localStorage.getItem("authToken");
+
+    const response = await fetch(`${BACKEND_URL}/flashcards/generate-deck`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            ...(token ? { Authorization: `Bearer ${token}` } : {})
         },
-        body: JSON.stringify(body),
-    }).then((r) => r.json());
+        body: JSON.stringify(requestBody),
+    });
 
-    return JSON.parse(res.message);
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to generate deck");
+    }
+
+    const { deck } = await response.json();
+
+    return deck;
 }

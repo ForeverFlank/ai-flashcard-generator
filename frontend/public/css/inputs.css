@@ -1,0 +1,63 @@
+.pill-group {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.pill {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 0.25rem 0.5rem;
+    cursor: pointer;
+    user-select: none;
+    border: 1px solid #393c4a;
+    transition: 100ms;
+}
+
+.pill input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+}
+
+.pill:has(input[type="radio"]:checked) {
+    background-color: #697083;
+    border: 1px solid #939eba;
+}
+
+.pill-blue:has(input[type="radio"]:checked) {
+    background: lch(15 15 270);
+    border: 1px solid lch(50 50 270);
+}
+
+.pill-yellow:has(input[type="radio"]:checked) {
+    background: lch(15 15 90);
+    border: 1px solid lch(50 50 90);
+}
+
+.pill-red:has(input[type="radio"]:checked) {
+    background: lch(15 15 30);
+    border: 1px solid lch(50 50 30);
+}
+
+
+.input-number-group {
+    display: flex;
+    flex-direction: row;
+}
+
+.input-number-group button {
+    border: 1px solid #393c4a;
+    width: 2em;
+}
+
+.input-number-minus {
+    border-radius: 999px 0 0 999px;
+}
+
+.input-number-plus {
+    border-radius: 0 999px 999px 0;
+}

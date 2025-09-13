@@ -2,54 +2,102 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./style.css">
-    <title>AI Flashcard Generator</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/inputs.css">
+  <link rel="stylesheet" href="./css/flashcard.css">
+  <title>AI Flashcard Generator</title>
 </head>
 
 <body>
-    <main>
-        <div class="flashcards-form">
-            <h1>AI Flashcard Generator</h1>
+  <header>
+    <div class="header-container">
+      <p>FlashGen</p>
+    </div>
+  </header>
 
-            <form>
-                <div class="form-general">
-                    <input type="text" id="input-topic" class="input-topic" placeholder="Enter topic here" required />
+  <main>
+    <div class="app-container">
+      <h1>AI Flashcard Generator</h1>
 
-                    <button id="btn-submit" class="btn-submit" type="button">Submit</button>
-                </div>
+      <form class="generator-form">
+        <div class="generator-input-field">
+          <input type="text" id="input-topic" placeholder="Enter topic here" required />
 
-                <div class="form-advanced">
-                    <label for="cardCount">Number of Cards:</label>
-                    <input type="number" id="input-card-count" min="1" max="50" value="10" />
-
-                    <label>Length:</label>
-                    <select id="input-length">
-                        <option value="short">Short</option>
-                        <option value="medium" selected>Medium</option>
-                        <option value="long">Long</option>
-                    </select>
-
-                    <label>Difficulty:</label>
-                    <select id="input-difficulty">
-                        <option value="easy">Easy</option>
-                        <option value="medium" selected>Medium</option>
-                        <option value="hard">Hard</option>
-                    </select>
-                </div>
-
-            </form>
-
+          <button id="btn-submit" type="button">Generate</button>
         </div>
 
-        <div id="flashcards-container"></div>
-    </main>
+        <div class="generator-input-options">
+          <div>
+            <label>Length</label>
+            <div class="input-number-group">
+              <button class="input-number-minus">&minus;</button>
+              <input type="number" id="input-card-count" min="1" max="50" value="10" />
+              <button class="input-number-plus">&plus;</button>
+            </div>
+          </div>
 
-    <script type="module" src="./scripts/main.js"></script>
+          <div>
+            <label>Length</label>
+            <div class="pill-group" role="radio" aria-label="Length">
+              <label class="pill pill-blue">
+                <input type="radio" name="length" value="short">
+                <span>Short</span>
+              </label>
+
+              <label class="pill pill-yellow">
+                <input type="radio" name="length" value="medium" checked>
+                <span>Medium</span>
+              </label>
+
+              <label class="pill pill-red">
+                <input type="radio" name="length" value="long">
+                <span>Long</span>
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <label>Difficulty</label>
+            <div class="pill-group" role="radio" aria-label="Difficulty">
+              <label class="pill pill-blue">
+                <input type="radio" name="difficulty" value="easy">
+                <span>Easy</span>
+              </label>
+
+              <label class="pill pill-yellow">
+                <input type="radio" name="difficulty" value="medium" checked>
+                <span>Medium</span>
+              </label>
+
+              <label class="pill pill-red">
+                <input type="radio" name="difficulty" value="hard">
+                <span>Hard</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div style="margin: 4em 0;"></div>
+    
+    <div class="results-container">
+      <h2>Your flashcards are ready!</h2>
+      <div id="flashcards-container" class="flashcards-container">
+      </div>
+    </div>
+
+    <div style="margin: 60vh 0;"></div>
+  </main>
+
+  <footer></footer>
+
+  <script type="module" src="./scripts/main.js"></script>
 </body>
 
 </html>
