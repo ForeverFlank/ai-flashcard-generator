@@ -1,3 +1,5 @@
+"use strict";
+
 import { GoogleGenAI } from "@google/genai";
 import { systemPrompt } from "./system-prompt.js";
 
@@ -6,7 +8,7 @@ const ai = new GoogleGenAI({
 });
 
 export async function generateDeckJSONFromLLM(data) {
-    const { topic, cardCount, contentLength, difficulty } = data;
+    const { topic, cardCount, contentLength, mode } = data;
 
     const chat = ai.chats.create({
         model: "gemini-2.5-flash",
@@ -23,9 +25,15 @@ export async function generateDeckJSONFromLLM(data) {
             Topic: ${topic}
             Count: ${cardCount}
             Length: ${contentLength}
-            Difficulty: ${difficulty}
+            Mode: ${mode}
         `.trim(),
     });
 
-    return response.text;
+    const cleanedJson = response.text
+        .replace(/^```json\s*/, "")
+        .replace(/^```\s*/, "")
+        .replace(/\s*```$/, "")
+        .trim();
+
+    return cleanedJson;
 }

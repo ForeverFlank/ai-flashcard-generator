@@ -1,20 +1,63 @@
 "use strict";
 
-import { Deck } from "./deck.js";
-
 const BACKEND_URL = "http://localhost:3222"
 
-export async function requestDeck() {
+async function userRegister(name, password) {
+    try {
+        const response = await fetch(`${BACKEND_URL}/register`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, password }),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || "Registration failed");
+        }
+
+        const data = await response.json();
+        console.log("Registered user ID:", data.userId);
+        return data.userId;
+    } catch (error) {
+        console.error("Registration error:", error.message);
+    }
+}
+
+async function userLogin(name, password) {
+    try {
+        const response = await fetch(`${BACKEND_URL}/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, password }),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || "Login failed");
+        }
+
+        const data = await response.json();
+        console.log("Received auth token:", data.token);
+
+        localStorage.setItem("authToken", data.token);
+
+        return data.token;
+    } catch (error) {
+        console.error("Login error:", error.message);
+    }
+}
+
+async function requestDeck() {
     const topic = document.getElementById("input-topic").value.trim();
     const count = document.getElementById("input-card-count").value;
     const length = document.querySelector('input[name="length"]:checked')?.value;
-    const difficulty = document.querySelector('input[name="difficulty"]:checked')?.value;
+    const mode = document.querySelector('input[name="mode"]:checked')?.value;
 
     const requestBody = {
         topic,
         cardCount: count,
         contentLength: length,
-        difficulty,
+        mode,
     };
 
     const token = localStorage.getItem("authToken");
@@ -37,3 +80,5 @@ export async function requestDeck() {
 
     return deck;
 }
+
+export { userRegister, userLogin, requestDeck }

@@ -49,6 +49,15 @@
     flex-direction: row;
 }
 
+.input-number-group input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.input-number-group input[type="number"]::-webkit-inner-spin-button, 
+.input-number-group input[type="number"]::-webkit-outer-spin-button {
+    display: none;
+}
+
 .input-number-group button {
     border: 1px solid #393c4a;
     width: 2em;

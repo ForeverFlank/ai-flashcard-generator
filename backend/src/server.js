@@ -1,4 +1,5 @@
 import "dotenv/config";
+import "./database.js";
 import app from "./app.js";
 
 process.on("uncaughtException", (err) => {

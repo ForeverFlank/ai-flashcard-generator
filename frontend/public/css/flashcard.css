@@ -1,3 +1,12 @@
+.flashcards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 16rem);
+    grid-gap: 10px;
+    justify-content: center;
+    row-gap: 1rem;
+    width: 80%;
+}
+
 .flashcard {
     width: 16rem;
     height: 10rem;
@@ -11,24 +20,29 @@
     transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.flashcard:hover .flashcard-inner {
+.flashcard-flipped {
     transform: rotateX(180deg);
 }
 
 .flashcard-front,
 .flashcard-back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: absolute;
     width: 100%;
     height: 100%;
     padding: 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     backface-visibility: hidden;
     transform-style: preserve-3d;
     background-color: #f0f0e9;
     border-radius: 1rem;
     box-sizing: border-box;
+}
+
+.flashcard-front p,
+.flashcard-back p {
+    color: black;
 }
 
 .flashcard-front p {
@@ -53,9 +67,29 @@
     transform: rotateX(180deg);
 }
 
-.flashcard p {
+.flashcard-editor {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    row-gap: 0.25rem;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 1.5rem;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    background-color: #f0f0e9;
+    border-radius: 1rem;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.flashcard-editor textarea {
     color: black;
-    font-size: 1rem;
-    margin: 0;
-    text-align: center;
+}
+
+.flashcard-editor label {
+    margin-bottom: -0.125rem;
+    font-weight: 500;
+    color: black;
 }
