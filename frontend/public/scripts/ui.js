@@ -24,17 +24,6 @@ function drawFlashcardsReadMode(data) {
         const inner = document.createElement("div");
         inner.classList.add("flashcard-inner");
 
-        flashcard.addEventListener("click", () => {
-            const classList = inner.classList;
-            const flippedClass = "flashcard-flipped";
-            const flipped = classList.contains(flippedClass);
-            if (flipped) {
-                classList.remove(flippedClass);
-            } else {
-                classList.add(flippedClass);
-            }
-        });
-
         const front = document.createElement("div");
         front.classList.add("flashcard-front");
         const back = document.createElement("div");
@@ -63,6 +52,17 @@ function drawFlashcardsReadMode(data) {
 
         flashcard.appendChild(inner);
         container.appendChild(flashcard);
+
+        flashcard.addEventListener("click", () => {
+            const classList = inner.classList;
+            const flippedClass = "flashcard-flipped";
+            const flipped = classList.contains(flippedClass);
+            if (flipped) {
+                classList.remove(flippedClass);
+            } else {
+                classList.add(flippedClass);
+            }
+        });
     });
 }
 

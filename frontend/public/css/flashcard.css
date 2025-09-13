@@ -5,6 +5,9 @@
     justify-content: center;
     row-gap: 1rem;
     width: 80%;
+    margin: 2rem 0;
+    max-height: 50vw;
+    overflow-y: scroll;
 }
 
 .flashcard {
@@ -84,12 +87,19 @@
     overflow: hidden;
 }
 
-.flashcard-editor textarea {
-    color: black;
-}
-
 .flashcard-editor label {
     margin-bottom: -0.125rem;
     font-weight: 500;
     color: black;
+}
+
+.flashcard-editor textarea,
+.flashcard-editor p {
+    margin: 0.125rem 0;
+    color: black;
+    resize: none;
+}
+
+.flashcard-editor textarea {
+    border: none;
 }
