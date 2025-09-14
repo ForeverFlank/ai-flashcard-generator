@@ -66,4 +66,8 @@ async function authMiddleware(req, res, next) {
     next();
 }
 
-export { generateToken, authMiddleware }
+async function checkAuth(req, res) {
+    res.status(200).json({ user: { id: req.user._id, name: req.user.name } });
+}
+
+export { generateToken, authMiddleware, checkAuth }

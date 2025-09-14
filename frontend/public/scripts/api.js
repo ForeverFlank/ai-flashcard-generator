@@ -2,9 +2,9 @@
 
 const BACKEND_URL = "http://localhost:3222"
 
-async function registerUser(name, password) {
+async function signupUser(name, password) {
     try {
-        const response = await fetch(`${BACKEND_URL}/register`, {
+        const response = await fetch(`${BACKEND_URL}/signup`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ name, password }),
@@ -16,10 +16,11 @@ async function registerUser(name, password) {
         }
 
         const data = await response.json();
-        console.log("Registered user ID:", data.userId);
-        return data.userId;
+        localStorage.setItem("authToken", data.token);
+        return data.token;
     } catch (error) {
         console.error("Registration error:", error.message);
+        return false;
     }
 }
 
@@ -37,13 +38,33 @@ async function loginUser(name, password) {
         }
 
         const data = await response.json();
-        console.log("Received auth token:", data.token);
-
         localStorage.setItem("authToken", data.token);
-
         return data.token;
     } catch (error) {
         console.error("Login error:", error.message);
+        return false;
+    }
+}
+
+async function checkAuth() {
+    const token = localStorage.getItem("authToken");
+    if (!token) return false;
+
+    try {
+        const response = await fetch(`${BACKEND_URL}/check-auth`, {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) return false;
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Auth check failed:", error);
+        return false;
     }
 }
 
@@ -53,16 +74,16 @@ async function generateDeck() {
         const count = document.getElementById("input-card-count").value;
         const difficulty = document.querySelector('input[name="difficulty"]:checked')?.value;
         const mode = document.querySelector('input[name="mode"]:checked')?.value;
-    
+
         const requestBody = {
             topic,
             count,
             difficulty,
             mode,
         };
-    
+
         const token = localStorage.getItem("authToken");
-    
+
         const response = await fetch(`${BACKEND_URL}/flashcards/generate-deck`, {
             method: "POST",
             headers: {
@@ -71,14 +92,14 @@ async function generateDeck() {
             },
             body: JSON.stringify(requestBody),
         });
-    
+
         if (!response.ok) {
             const errorData = await response.json();
             throw new Error(errorData.error || "Failed to generate deck");
         }
-    
+
         const { deck } = await response.json();
-    
+
         return deck;
     } catch (error) {
         console.error("Request deck error: ", error.message);
@@ -97,7 +118,7 @@ async function uploadDeck(deck) {
             },
             body: JSON.stringify(deck),
         });
-    
+
         if (!response.ok) {
             const errorData = await response.json();
             throw new Error(errorData.error || "Failed to upload deck");
@@ -128,8 +149,9 @@ async function getDecksByUsername(name) {
 }
 
 export {
-    registerUser,
+    signupUser,
     loginUser,
+    checkAuth,
     generateDeck,
     uploadDeck,
     getDecksByUsername

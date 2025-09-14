@@ -27,6 +27,12 @@ button {
     transition: 150ms;
 }
 
+.error-text {
+    font-size: small;
+    font-weight: 500;
+    color: lch(50 50 30);
+}
+
 .header-container {
     display: flex;
     flex-direction: row;
@@ -89,11 +95,26 @@ button {
     border-radius: 999px;
 }
 
-.user-menu button:hover {
+.user-menu input {
+    padding: 0.25rem 0.25rem;
+    margin: 0.25rem 0;
+}
+
+.user-menu form p {
+    margin-top: 0.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.btn-user-menu {
     background-color: #212329;
 }
 
-.user-menu button:nth-child(5):hover {
+.btn-sign-up {
+    background-color: lch(15 15 270);
+    border: 1px solid lch(50 50 270);
+}
+
+.btn-sign-out {
     background-color: lch(15 15 30);
     border: 1px solid lch(50 50 30);
 }
