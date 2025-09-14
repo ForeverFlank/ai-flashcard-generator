@@ -1,6 +1,8 @@
-import Deck from "../models/deck.js";
+"use strict";
+
+import Deck from "../models/deck-model.js";
 import { generateDeckJSONFromLLM } from "../llm.js";
-import { User } from "../models/user.js";
+import { User } from "../models/user-model.js";
 
 async function generateDeck(req, res) {
     try {

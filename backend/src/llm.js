@@ -11,7 +11,7 @@ export async function generateDeckJSONFromLLM(data) {
     const { topic, count, difficulty, mode } = data;
 
     const chat = ai.chats.create({
-        model: "gemini-2.5-flash",
+        model: "gemini-2.0-flash",
         history: [
             {
                 role: "model",

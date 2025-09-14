@@ -1,6 +1,6 @@
 "use strict";
 
-import { User } from "./models/user.js";
+import { User } from "./models/user-model.js";
 
 function generateToken(userId, startTime, expireTime) {
     const key = process.env.AUTH_TOKEN_KEY;
@@ -67,7 +67,7 @@ async function authMiddleware(req, res, next) {
 }
 
 async function checkAuth(req, res) {
-    res.status(200).json({ user: { id: req.user._id, name: req.user.name } });
+    res.status(200).json({ id: req.user._id, name: req.user.name });
 }
 
 export { generateToken, authMiddleware, checkAuth }

@@ -1,15 +1,13 @@
 "use strict";
 
-import { generateDeck, uploadDeck } from "./api.js";
-import { mockDeck } from "./mock-data.js";
-import { drawDeckReadMode, drawDeckEditMode } from "./ui.js";
+import { generateDeck, uploadDeck } from "./apis/flashcard-api.js";
+import { drawDeckReadMode, drawDeckEditMode } from "./uis/flashcard-ui.js";
 
 let currentDeck = null;
 let currentMode = "read";
 
 async function requestAndDrawFlashcards() {
-    // currentDeck = await generateDeck();
-    currentDeck = mockDeck;
+    currentDeck = await generateDeck();
     currentMode = "read";
     console.log(currentDeck)
     drawDeckReadMode(currentDeck);

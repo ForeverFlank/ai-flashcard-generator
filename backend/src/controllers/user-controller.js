@@ -1,5 +1,7 @@
+"use strict";
+
 import { generateToken } from "../auth.js";
-import { User } from "../models/user.js";
+import { User } from "../models/user-model.js";
 import { generateSalt, hashPassword } from "../password.js";
 
 const usernameRegex = /^(?!.*  )[a-zA-Z0-9._](?:[a-zA-Z0-9._ ]{1,28}[a-zA-Z0-9._])?$/;
@@ -14,12 +16,7 @@ async function signupUser(req, res) {
             return res.status(400).json({ error: "Invalid password" });
         }
         const salt = generateSalt(16);
-        let hashedPass = hashPassword(password + salt);
-        const user = await User.create({
-            name,
-            salt,
-            password: hashedPass
-        });
+        const user = await User.create({ name, salt, password });
 
         const token = generateToken(
             user._id,

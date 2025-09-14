@@ -1,6 +1,6 @@
 "use strict";
 
-import { svgTrash } from "./icons.js";
+import { svgTrash } from "../icons.js";
 
 const colorPallets = ["#f4c348ff", "#4fdd98ff", "#469defff", "#ed55ebff"];
 const container = document.getElementById("flashcards-container");

@@ -21,7 +21,11 @@
       </div>
       <div>
         <button id="btn-user" class="btn-user">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M463 448.2C440.9 409.8 399.4 384 352 384L288 384C240.6 384 199.1 409.8 177 448.2C212.2 487.4 263.2 512 320 512C376.8 512 427.8 487.3 463 448.2zM64 320C64 178.6 178.6 64 320 64C461.4 64 576 178.6 576 320C576 461.4 461.4 576 320 576C178.6 576 64 461.4 64 320zM320 336C359.8 336 392 303.8 392 264C392 224.2 359.8 192 320 192C280.2 192 248 224.2 248 264C248 303.8 280.2 336 320 336z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+            <path
+              d="M463 448.2C440.9 409.8 399.4 384 352 384L288 384C240.6 384 199.1 409.8 177 448.2C212.2 487.4 263.2 512 320 512C376.8 512 427.8 487.3 463 448.2zM64 320C64 178.6 178.6 64 320 64C461.4 64 576 178.6 576 320C576 461.4 461.4 576 320 576C178.6 576 64 461.4 64 320zM320 336C359.8 336 392 303.8 392 264C392 224.2 359.8 192 320 192C280.2 192 248 224.2 248 264C248 303.8 280.2 336 320 336z" />
+          </svg>
         </button>
         <div id="header-user-menu" class="user-menu" style="display: none;">
           <div id="header-user-menu-not-logged-in" style="display: none;">
@@ -30,7 +34,7 @@
             <button id="btn-sign-up" class="btn-sign-up">Sign up</button>
           </div>
           <div id="header-user-menu-logged-in" style="display: none;">
-            <p>Logged in as:<br>User</p>
+            <p>Logged in as:<br><span id="user-menu-username">User</span></p>
             <button id="btn-new-deck" class="btn-user-menu">New deck</button>
             <button id="btn-my-decks" class="btn-user-menu">My decks</button>
             <hr>
@@ -43,17 +47,17 @@
             <p>Password</p>
             <input type="password" id="sign-up-pass" required>
             <div style="margin: 1rem 0"></div>
-            <button type="submit" id="btn-sign-up-submit">Sign Up</button>
+            <button type="button" id="btn-sign-up-submit">Sign Up</button>
             <p id="sign-up-failed" class="error-text" style="display: none;">Sign up failed</p>
           </form>
-          
+
           <form id="header-user-menu-log-in">
             <p>Username</p>
             <input type="text" id="log-in-name" required>
             <p>Password</p>
             <input type="password" id="log-in-pass" required>
             <div style="margin: 1rem 0"></div>
-            <button type="submit" id="btn-log-in-submit">Log in</button>
+            <button type="button" id="btn-log-in-submit">Log in</button>
             <p id="log-in-failed" class="error-text" style="display: none;">Log in failed</p>
           </form>
         </div>
@@ -62,23 +66,23 @@
   </header>
 
   <main>
-    <div class="app-container">
+    <div class="app-container" style="display: flex;">
       <h1>AI Flashcard Generator</h1>
 
       <form class="generator-form">
         <div class="generator-input-field">
           <input type="text" id="input-topic" placeholder="Enter topic here" required />
 
-          <button id="btn-submit" type="button">Generate</button>
+          <button id="btn-generator-submit" type="button">Generate</button>
         </div>
 
         <div class="generator-input-options">
           <div>
             <label>Length</label>
             <div class="input-number-group">
-              <button type="button" id="btn-card-count-sub" class="input-number-minus">&minus;</button>
-              <input type="number" id="input-card-count" min="1" max="20" value="10" />
-              <button type="button" id="btn-card-count-add" class="input-number-plus">&plus;</button>
+              <button type="button" class="input-number-minus">&minus;</button>
+              <input type="number" min="1" max="20" value="10" />
+              <button type="button" class="input-number-plus">&plus;</button>
             </div>
           </div>
 
@@ -122,11 +126,11 @@
 
     <div style="margin: 4rem 0;"></div>
 
-    <div class="deck-container">
+    <div class="deck-container" style="display: none;">
       <h2 id="deck-title"></h2>
       <!-- vvvvv use toggle ui for this -->
       <button id="btn-edit-deck">Edit</button>
-      
+
       <div id="flashcards-container" class="flashcards-container">
       </div>
 

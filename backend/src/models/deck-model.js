@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { FlashcardSchema } from "./flashcard.js";
+import { FlashcardSchema } from "./flashcard-model.js";
 
 const DeckSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },

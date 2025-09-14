@@ -17,8 +17,9 @@ function hashPassword(salted) {
         h.push(h.shift());
         for (let j = 0; j < salted.length; j++) {
             for (let k = 0; k < 4; k++) {
-                h[k] = (h[k] << (2 * k + 1)) - h[k] + salted.charCodeAt(j);
-                h[k] += (i * i) % 1000000007;
+                h[k] = (h[k] << (2 * k + 3)) - h[k] + salted.charCodeAt(j);
+                h[k] += i % 101;
+                h[k] += (i * i) % 1013;
                 h[k] |= 0;
             }
         }
