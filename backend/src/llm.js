@@ -8,7 +8,7 @@ const ai = new GoogleGenAI({
 });
 
 export async function generateDeckJSONFromLLM(data) {
-    const { topic, cardCount, contentLength, mode } = data;
+    const { topic, count, difficulty, mode } = data;
 
     const chat = ai.chats.create({
         model: "gemini-2.5-flash",
@@ -23,8 +23,8 @@ export async function generateDeckJSONFromLLM(data) {
     const response = await chat.sendMessage({
         message: `
             Topic: ${topic}
-            Count: ${cardCount}
-            Length: ${contentLength}
+            Count: ${count}
+            Difficulty: ${difficulty}
             Mode: ${mode}
         `.trim(),
     });

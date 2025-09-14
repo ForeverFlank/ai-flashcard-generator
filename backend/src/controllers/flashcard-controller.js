@@ -3,17 +3,17 @@ import { generateDeckJSONFromLLM } from "../llm.js";
 
 async function generateDeck(req, res) {
     try {
-        const { topic, cardCount, contentLength, mode, name } = req.body;
+        const { topic, count, difficulty, mode, name } = req.body;
         const user = req.user;
 
-        if (!user || !topic || !cardCount || !contentLength || !mode) {
+        if (!user || !topic || !count || !difficulty || !mode) {
             return res.status(400).json({ error: "Missing required fields" });
         }
 
         const deckJson = await generateDeckJSONFromLLM({
             topic,
-            cardCount,
-            contentLength,
+            count,
+            difficulty,
             mode,
         });
 
@@ -52,28 +52,43 @@ async function storeDeck(req, res) {
             return res.status(400).json({ error: "Missing required fields" });
         }
 
-        const existingDeck = await Deck.findOne({ _id, user: user._id });
+        const existingDeck = await Deck.findById(_id);
 
         if (!existingDeck) {
-            return res.status(404).json({ error: "Deck not found or unauthorized" });
+            return res.status(404).json({ error: "Deck not found" });
         }
 
-        existingDeck.topic = topic || existingDeck.topic;
-        existingDeck.name = name || topic || existingDeck.name;
-        existingDeck.flashcards = flashcards;
+        if (existingDeck.user._id.toString() === user._id.toString()) {
+            existingDeck.topic = topic || existingDeck.topic;
+            existingDeck.name = name || topic || existingDeck.name;
+            existingDeck.flashcards = flashcards;
 
-        await existingDeck.save();
+            await existingDeck.save();
 
-        const response = existingDeck.toObject();
+            const response = existingDeck.toObject();
+            response.author = user.name;
+            delete response.user;
+
+            return res.status(200).json({ deck: response });
+        }
+
+        const newDeck = await Deck.create({
+            user,
+            topic,
+            name: name || topic,
+            flashcards,
+        });
+
+        const response = newDeck.toObject();
         response.author = user.name;
         delete response.user;
 
-        res.status(200).json({ deck: response });
+        return res.status(201).json({ deck: response });
 
     } catch (e) {
         console.error("Error storing deck:", e);
-        res.status(500).json({ error: "Internal Server Error" });
+        return res.status(500).json({ error: "Internal Server Error" });
     }
-};
+}
 
 export { generateDeck, storeDeck }

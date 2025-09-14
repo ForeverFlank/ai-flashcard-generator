@@ -51,13 +51,13 @@ async function generateDeck() {
     try {
         const topic = document.getElementById("input-topic").value.trim();
         const count = document.getElementById("input-card-count").value;
-        const length = document.querySelector('input[name="length"]:checked')?.value;
+        const difficulty = document.querySelector('input[name="difficulty"]:checked')?.value;
         const mode = document.querySelector('input[name="mode"]:checked')?.value;
     
         const requestBody = {
             topic,
-            cardCount: count,
-            contentLength: length,
+            count,
+            difficulty,
             mode,
         };
     
@@ -88,7 +88,7 @@ async function generateDeck() {
 async function uploadDeck(deck) {
     try {
         const token = localStorage.getItem("authToken");
-        
+
         const response = await fetch(`${BACKEND_URL}/flashcards/upload-deck`, {
             method: "POST",
             headers: {
