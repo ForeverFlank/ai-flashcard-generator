@@ -1,18 +1,31 @@
 .flashcards-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, 16rem);
-    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: 1rem;
     justify-content: center;
-    row-gap: 1rem;
+    align-content: start;
     width: 80%;
-    margin: 2rem 0;
+    max-width: 1000px;
+    margin: 2rem auto;
     max-height: 50vw;
-    overflow-y: scroll;
+    overflow-y: auto;
+    padding: 1rem;
+    box-sizing: border-box;
 }
 
 .flashcard {
     width: 16rem;
     height: 10rem;
+}
+
+@media (max-width: 720px) {
+    .flashcards-container {
+        grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    }
+    .flashcard {
+        width: 12rem;
+        height: 7.5rem;
+    }
 }
 
 .flashcard-inner {
@@ -35,17 +48,26 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    padding: 1.5rem;
+    padding: 0.5rem 1rem;
     backface-visibility: hidden;
     transform-style: preserve-3d;
     background-color: #f0f0e9;
     border-radius: 1rem;
     box-sizing: border-box;
+    overflow-y: auto;
 }
+
+.flashcard-front {
+    padding-left: 1.25rem;
+}
+
 
 .flashcard-front p,
 .flashcard-back p {
+    margin: auto;
+    text-align: center;
     color: black;
+    word-break: break-word;
 }
 
 .flashcard-front p {
@@ -63,7 +85,7 @@
     left: 0;
     right: 0;
     height: 100%;
-    width: 10px;
+    width: 0.5rem;
 }
 
 .flashcard-back {

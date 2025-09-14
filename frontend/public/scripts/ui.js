@@ -35,13 +35,9 @@ function drawFlashcardsReadMode(deck) {
 
         const questionInput = document.createElement("p");
         questionInput.innerText = card.q;
-        questionInput.classList.add("card-input");
-        questionInput.oninput = e => card.q = e.target.value;
 
         const answerInput = document.createElement("p");
         answerInput.innerText = card.a;
-        answerInput.classList.add("card-input");
-        answerInput.oninput = e => card.a = e.target.value;
 
         front.appendChild(questionInput);
         front.appendChild(leftBorder);
@@ -73,7 +69,6 @@ function drawFlashcardsEditMode(deck) {
     deck.flashcards.forEach((card) => {
         const flashcard = document.createElement("div");
         flashcard.classList.add("flashcard");
-        flashcard.style.height = "12rem";
 
         const inner = document.createElement("div");
         inner.classList.add("flashcard-inner");

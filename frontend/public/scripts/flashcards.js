@@ -8,8 +8,8 @@ let currentDeck = null;
 let currentMode = "read";
 
 async function requestAndDrawFlashcards() {
-    currentDeck = await generateDeck();
-    // currentDeck = mockDeck;
+    // currentDeck = await generateDeck();
+    currentDeck = mockDeck;
     currentMode = "read";
     console.log(currentDeck)
     drawFlashcardsReadMode(currentDeck);
@@ -18,10 +18,10 @@ async function requestAndDrawFlashcards() {
 function toggleModeAndDrawFlashcards() {
     if (currentMode === "read") {
         currentMode = "edit";
-        drawFlashcardsReadMode(currentDeck);
+        drawFlashcardsEditMode(currentDeck);
     } else {
         currentMode = "read";
-        drawFlashcardsEditMode(currentDeck);
+        drawFlashcardsReadMode(currentDeck);
     }
 }
 

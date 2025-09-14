@@ -6,6 +6,15 @@ import {
 document.addEventListener("DOMContentLoaded", () => {
     loginUser("admin", "admin");
 
+    document.getElementById("btn-user").addEventListener("click", () => {
+        const menu = document.getElementById("header-user-menu");
+        if (menu.style.display === "none") {
+            menu.style.display = "flex";
+        } else {
+            menu.style.display = "none";
+        }
+    });
+
     document.getElementById("btn-submit").addEventListener("click", requestAndDrawFlashcards);
 
     document.getElementById("btn-edit-deck").addEventListener("click", toggleModeAndDrawFlashcards);
