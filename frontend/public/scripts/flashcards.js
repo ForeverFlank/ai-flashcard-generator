@@ -36,6 +36,8 @@ async function saveEditedFlashcards() {
         delete card.aEdited;
     });
     const success = await uploadDeck(currentDeck);
+    currentMode = "read";
+    drawDeckReadMode(currentDeck);
 }
 
 function cancelEditedFlashcards() {

@@ -1,13 +1,12 @@
 "use strict";
 
-import { setupUserMenu } from "./uis/app-ui.js";
+import { setupGeneratorMenu, setupUserMenu } from "./uis/app-ui.js";
 import {
-    cancelEditedFlashcards, requestAndDrawFlashcards, saveEditedFlashcards, toggleModeAndDrawFlashcards
+    cancelEditedFlashcards, saveEditedFlashcards, toggleModeAndDrawFlashcards
 } from "./flashcards.js";
 
 setupUserMenu();
-
-document.getElementById("btn-generator-submit").addEventListener("click", requestAndDrawFlashcards);
+setupGeneratorMenu();
 
 document.getElementById("btn-edit-deck").addEventListener("click", toggleModeAndDrawFlashcards);
 

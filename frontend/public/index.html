@@ -66,14 +66,14 @@
   </header>
 
   <main>
-    <div class="app-container" style="display: flex;">
+    <div id="generator-container" class="app-container" style="display: flex;">
       <h1>AI Flashcard Generator</h1>
 
       <form class="generator-form">
         <div class="generator-input-field">
-          <input type="text" id="input-topic" placeholder="Enter topic here" required />
+          <input type="text" id="input-topic" placeholder="Enter topic here" required/>
 
-          <button id="btn-generator-submit" type="button">Generate</button>
+          <button id="btn-generator-submit" type="button" disabled style="opacity: 0; pointer-events: none;">Generate</button>
         </div>
 
         <div class="generator-input-options">
@@ -81,7 +81,7 @@
             <label>Length</label>
             <div class="input-number-group">
               <button type="button" class="input-number-minus">&minus;</button>
-              <input type="number" min="1" max="20" value="10" />
+              <input id="input-card-count" type="number" min="1" max="20" value="10" />
               <button type="button" class="input-number-plus">&plus;</button>
             </div>
           </div>
@@ -123,10 +123,17 @@
         </div>
       </form>
     </div>
+    
+    <div id="loading-container" class="loading-container" style="display: none;">
+      <div style="margin: 4rem 0;"></div>
+      <p>Generating flashcards. Hang tight!</p>
+      <div class="throbber">
+        <div></div>
+        <div></div>
+      </div>
+    </div>
 
-    <div style="margin: 4rem 0;"></div>
-
-    <div class="deck-container" style="display: none;">
+    <div id="deck-container" class="deck-container" style="display: none;">
       <h2 id="deck-title"></h2>
       <!-- vvvvv use toggle ui for this -->
       <button id="btn-edit-deck">Edit</button>
@@ -138,6 +145,26 @@
         <button id="btn-edit-mode-save">Save</button>
         <button id="btn-edit-mode-cancel">Cancel</button>
       </div>
+    </div>
+
+    <div id="user-container" class="user-container">
+      <p>Username</p>
+      <hr>
+      <p>Decks</p>
+      <table>
+        <tr>
+          <th>Title</th>
+          <th></th>
+          <th>Modified</th>
+          <th></th>
+        </tr>
+        <tr>
+          <td>Deck 1</td>
+          <td><button>View</button></td>
+          <td>2025-09-15</td>
+          <td><button>Delete</button></td>
+        </tr>
+      </table>
     </div>
 
     <div style="margin: 60vh 0;"></div>

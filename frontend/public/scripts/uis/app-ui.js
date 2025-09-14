@@ -1,5 +1,6 @@
 "use strict";
 
+import { getDecksByUsername } from "../apis/flashcard-api.js";
 import { checkAuth, loggedInUser, loginUser, signOut, signupUser } from "../apis/user-api.js";
 
 document.querySelectorAll('.input-number-group').forEach(group => {
@@ -51,6 +52,8 @@ function setupUserMenu() {
     }
 
     userButton.addEventListener("click", async () => {
+        await checkAuth();
+
         const isVisible = userMenu.style.display === "flex";
         userMenu.style.display = isVisible ? "none" : "flex";
 
@@ -59,8 +62,6 @@ function setupUserMenu() {
         showMenuSection(null);
         signupFailedText.style.display = "none";
         loginFailedText.style.display = "none";
-
-        await checkAuth();
 
         if (loggedInUser) {
             showMenuSection(loggedInMenu);
@@ -114,4 +115,43 @@ function setupUserMenu() {
     });
 }
 
-export { setupUserMenu }
+function setupGeneratorMenu() {
+    const input = document.getElementById("input-topic");
+    const button = document.getElementById("btn-generator-submit");
+
+    input.addEventListener("input", () => {
+        const hasText = input.value.trim().length > 0;
+
+        button.disabled = !hasText;
+        button.style.opacity = hasText ? "1" : "0";
+        button.style.pointerEvents = hasText ? "auto" : "none";
+    });
+
+    button.addEventListener("click", async () => {
+        displayPages(["generator", "loading"]);
+        await requestAndDrawFlashcards();
+        displayPages(["deck"]);
+    });
+}
+
+function displayPages(pages) {
+    const generatorPage = document.getElementById("generator-container");
+    const loadingPage = document.getElementById("loading-container");
+    const deckPage = document.getElementById("deck-container");
+
+    generatorPage.style.display = "none";
+    loadingPage.style.display = "none";
+    deckPage.style.display = "none";
+
+    pages.forEach((page) => {
+        if (page === "generator") {
+            generatorPage.style.display = "flex";
+        } else if (page === "loading") {
+            loadingPage.style.display = "flex";
+        } else if (page === "deck") {
+            deckPage.style.display = "flex";
+        }
+    });
+}
+
+export { setupUserMenu, setupGeneratorMenu, displayPages }
