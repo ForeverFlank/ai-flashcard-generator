@@ -24,11 +24,13 @@
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M463 448.2C440.9 409.8 399.4 384 352 384L288 384C240.6 384 199.1 409.8 177 448.2C212.2 487.4 263.2 512 320 512C376.8 512 427.8 487.3 463 448.2zM64 320C64 178.6 178.6 64 320 64C461.4 64 576 178.6 576 320C576 461.4 461.4 576 320 576C178.6 576 64 461.4 64 320zM320 336C359.8 336 392 303.8 392 264C392 224.2 359.8 192 320 192C280.2 192 248 224.2 248 264C248 303.8 280.2 336 320 336z"/></svg>
         </button>
         <div id="header-user-menu" class="user-menu" style="display: none;">
-          <p>Signed in as:<br><span>User</span></p>
-          <button>New deck</button>
-          <button>My decks</button>
-          <hr>
-          <button>Sign out</button>
+          <div>
+            <p>Signed in as:<br><span>User</span></p>
+            <button>New deck</button>
+            <button>My decks</button>
+            <hr>
+            <button>Sign out</button>
+          </div>
         </div>
       </div>
     </div>
@@ -49,9 +51,9 @@
           <div>
             <label>Length</label>
             <div class="input-number-group">
-              <button class="input-number-minus">&minus;</button>
-              <input type="number" id="input-card-count" min="1" max="50" value="10" />
-              <button class="input-number-plus">&plus;</button>
+              <button type="button" id="btn-card-count-sub" class="input-number-minus">&minus;</button>
+              <input type="number" id="input-card-count" min="1" max="20" value="10" />
+              <button type="button" id="btn-card-count-add" class="input-number-plus">&plus;</button>
             </div>
           </div>
 
@@ -93,10 +95,10 @@
       </form>
     </div>
 
-    <div style="margin: 4em 0;"></div>
+    <div style="margin: 4rem 0;"></div>
 
     <div class="deck-container">
-      <h2>Your flashcards are ready!</h2>
+      <h2 id="deck-title"></h2>
       <!-- vvvvv use toggle ui for this -->
       <button id="btn-edit-deck">Edit</button>
       

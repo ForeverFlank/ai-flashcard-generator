@@ -1,5 +1,6 @@
 import Deck from "../models/deck.js";
 import { generateDeckJSONFromLLM } from "../llm.js";
+import { User } from "../models/user.js";
 
 async function generateDeck(req, res) {
     try {
@@ -41,7 +42,7 @@ async function generateDeck(req, res) {
         console.error("Error generating deck:", error);
         return res.status(500).json({ error: "Internal Server Error" });
     }
-};
+}
 
 async function storeDeck(req, res) {
     try {
@@ -54,11 +55,7 @@ async function storeDeck(req, res) {
 
         const existingDeck = await Deck.findById(_id);
 
-        if (!existingDeck) {
-            return res.status(404).json({ error: "Deck not found" });
-        }
-
-        if (existingDeck.user._id.toString() === user._id.toString()) {
+        if (existingDeck && existingDeck.user.toString() === user._id.toString()) {
             existingDeck.topic = topic || existingDeck.topic;
             existingDeck.name = name || topic || existingDeck.name;
             existingDeck.flashcards = flashcards;
@@ -91,4 +88,72 @@ async function storeDeck(req, res) {
     }
 }
 
-export { generateDeck, storeDeck }
+async function getDecksByUsername(req, res) {
+    const { name } = req.params;
+
+    try {
+        const user = await User.findOne({ name });
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        const decks = await Deck.find({ user: user._id /*, public: true */ });
+
+        const formatted = decks.map(deck => {
+            const obj = deck.toObject();
+            obj.author = user.name;
+            delete obj.user;
+            return obj;
+        });
+
+        return res.status(200).json({ decks: formatted });
+    } catch (e) {
+        console.error("Error fetching decks by username:", e);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
+async function getDeckById(req, res) {
+    try {
+        const deckId = req.params.id;
+
+        const deck = await Deck.findById(deckId).populate("user", "name");
+        if (!deck) {
+            return res.status(404).json({ error: "Deck not found" });
+        }
+
+        const response = deck.toObject();
+        response.author = deck.user?.name || "Unknown";
+        delete response.user;
+
+        return res.status(200).json({ deck: response });
+    } catch (e) {
+        console.error("Error fetching deck:", e);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
+async function deleteDeckById(req, res) {
+    try {
+        const deckId = req.params.id;
+        const userId = req.user._id;
+
+        const deleted = await Deck.findOneAndDelete({ _id: deckId, user: userId });
+        if (!deleted) {
+            return res.status(404).json({ error: "Deck not found or unauthorized" });
+        }
+
+        return res.status(200).json({ message: "Deck deleted successfully" });
+    } catch (e) {
+        console.error("Error deleting deck:", e);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
+export {
+    generateDeck,
+    storeDeck,
+    getDecksByUsername,
+    getDeckById,
+    deleteDeckById
+};

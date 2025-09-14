@@ -2,7 +2,7 @@
 
 import { generateDeck, uploadDeck } from "./api.js";
 import { mockDeck } from "./mock-data.js";
-import { drawFlashcardsReadMode, drawFlashcardsEditMode } from "./ui.js";
+import { drawDeckReadMode, drawDeckEditMode } from "./ui.js";
 
 let currentDeck = null;
 let currentMode = "read";
@@ -12,20 +12,21 @@ async function requestAndDrawFlashcards() {
     currentDeck = mockDeck;
     currentMode = "read";
     console.log(currentDeck)
-    drawFlashcardsReadMode(currentDeck);
+    drawDeckReadMode(currentDeck);
 }
 
 function toggleModeAndDrawFlashcards() {
     if (currentMode === "read") {
         currentMode = "edit";
-        drawFlashcardsEditMode(currentDeck);
+        drawDeckEditMode(currentDeck);
     } else {
         currentMode = "read";
-        drawFlashcardsReadMode(currentDeck);
+        drawDeckReadMode(currentDeck);
     }
 }
 
 async function saveEditedFlashcards() {
+    currentDeck.flashcards = currentDeck.flashcards.filter((card) => !card.toBeDeleted);
     currentDeck.flashcards.forEach((card) => {
         if (card.qEdited) {
             card.q = card.qEdited;
@@ -40,10 +41,14 @@ async function saveEditedFlashcards() {
 }
 
 function cancelEditedFlashcards() {
+    currentDeck.flashcards = currentDeck.flashcards.filter((card) => !card.recentlyCreated);
     currentDeck.flashcards.forEach((card) => {
+        delete card.toBeDeleted;
         delete card.qEdited;
         delete card.aEdited;
     });
+    currentMode = "read";
+    drawDeckReadMode(currentDeck);
 }
 
 export {

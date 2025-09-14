@@ -110,4 +110,27 @@ async function uploadDeck(deck) {
     }
 }
 
-export { registerUser, loginUser, generateDeck, uploadDeck }
+async function getDecksByUsername(name) {
+    try {
+        const res = await fetch(`${BACKEND_URL}/users/${encodeURIComponent(name)}/decks`);
+
+        if (!res.ok) {
+            const err = await res.json();
+            throw new Error(err.error || "Failed to fetch decks");
+        }
+
+        const data = await res.json();
+        return data.decks;
+    } catch (error) {
+        console.error("Error fetching decks by username:", error);
+        throw error;
+    }
+}
+
+export {
+    registerUser,
+    loginUser,
+    generateDeck,
+    uploadDeck,
+    getDecksByUsername
+}

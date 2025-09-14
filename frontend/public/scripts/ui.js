@@ -1,6 +1,9 @@
 "use strict";
 
+import { svgTrash } from "./icons.js";
+
 const colorPallets = ["#f4c348ff", "#4fdd98ff", "#469defff", "#ed55ebff"];
+const container = document.getElementById("flashcards-container");
 
 function getCardColor(question) {
     let n = 0xCED7;
@@ -13,8 +16,7 @@ function getCardColor(question) {
     return colorPallets[n];
 }
 
-function drawFlashcardsReadMode(deck) {
-    const container = document.getElementById("flashcards-container");
+function drawDeckReadMode(deck) {
     container.innerHTML = "";
 
     deck.flashcards.forEach((card) => {
@@ -49,7 +51,7 @@ function drawFlashcardsReadMode(deck) {
         flashcard.appendChild(inner);
         container.appendChild(flashcard);
 
-        flashcard.addEventListener("click", () => {
+        flashcard.onclick = () => {
             const classList = inner.classList;
             const flippedClass = "flashcard-flipped";
             const flipped = classList.contains(flippedClass);
@@ -58,56 +60,84 @@ function drawFlashcardsReadMode(deck) {
             } else {
                 classList.add(flippedClass);
             }
-        });
+        };
     });
 }
 
-function drawFlashcardsEditMode(deck) {
-    const container = document.getElementById("flashcards-container");
+function drawFlashcardEditMode(card, addButton) {
+    const flashcard = document.createElement("div");
+    flashcard.classList.add("flashcard");
+    flashcard.style.height = "12rem";
+
+    const inner = document.createElement("div");
+    inner.classList.add("flashcard-inner");
+
+    const editor = document.createElement("div");
+    editor.classList.add("flashcard-editor");
+
+    const leftBorder = document.createElement("div");
+    leftBorder.classList.add("flashcard-left-border");
+    leftBorder.style.backgroundColor = getCardColor(card.q);
+
+    const questionLabel = document.createElement("label");
+    questionLabel.innerText = "Question";
+
+    const answerLabel = document.createElement("label");
+    answerLabel.innerText = "Answer";
+
+    const questionInput = document.createElement("textarea");
+    questionInput.value = card.q;
+    questionInput.classList.add("card-input");
+    questionInput.oninput = e => card.qEdited = e.target.value;
+
+    const answerInput = document.createElement("textarea");
+    answerInput.value = card.a;
+    answerInput.classList.add("card-input");
+    answerInput.oninput = e => card.aEdited = e.target.value;
+
+    const deleteButton = document.createElement("button");
+    deleteButton.innerHTML = svgTrash;
+    deleteButton.classList.add("btn-delete-flashcard");
+    deleteButton.onclick = () => {
+        card.toBeDeleted = true;
+        flashcard.remove();
+    };
+
+    editor.appendChild(questionLabel);
+    editor.appendChild(questionInput);
+    editor.appendChild(answerLabel);
+    editor.appendChild(answerInput);
+    editor.appendChild(leftBorder);
+    editor.appendChild(deleteButton);
+
+    inner.appendChild(editor);
+
+    flashcard.appendChild(inner);
+    container.insertBefore(flashcard, addButton);
+}
+
+function drawDeckEditMode(deck) {
     container.innerHTML = "";
 
-    deck.flashcards.forEach((card) => {
-        const flashcard = document.createElement("div");
-        flashcard.classList.add("flashcard");
+    const addButton = document.createElement("button");
+    addButton.classList.add("btn-add-flashcard");
+    addButton.innerHTML = "<span>+</span> Add Flashcard";
+    addButton.onclick = () => {
+        const card = {
+            q: "",
+            a: "",
+            qEdited: "",
+            aEdited: "",
+            recentlyCreated: true,
+            toBeDeleted: false,
+        };
+        deck.flashcards.push(card);
 
-        const inner = document.createElement("div");
-        inner.classList.add("flashcard-inner");
+        drawFlashcardEditMode(card, addButton);
+    };
 
-        const editor = document.createElement("div");
-        editor.classList.add("flashcard-editor");
-
-        const leftBorder = document.createElement("div");
-        leftBorder.classList.add("flashcard-left-border");
-        leftBorder.style.backgroundColor = getCardColor(card.q);
-
-        const questionLabel = document.createElement("label");
-        questionLabel.innerText = "Question";
-
-        const answerLabel = document.createElement("label");
-        answerLabel.innerText = "Answer";
-
-        const questionInput = document.createElement("textarea");
-        questionInput.value = card.q;
-        questionInput.classList.add("card-input");
-        questionInput.oninput = e => card.qEdited = e.target.value;
-
-        const answerInput = document.createElement("textarea");
-        answerInput.value = card.a;
-        answerInput.classList.add("card-input");
-        answerInput.oninput = e => card.aEdited = e.target.value;
-
-        editor.appendChild(questionLabel);
-        editor.appendChild(questionInput);
-        editor.appendChild(answerLabel);
-        editor.appendChild(answerInput);
-        editor.appendChild(leftBorder);
-
-        inner.appendChild(editor);
-
-        flashcard.appendChild(inner);
-        container.appendChild(flashcard);
-    });
+    container.appendChild(addButton);
+    deck.flashcards.forEach((card) => drawFlashcardEditMode(card, addButton));
 }
 
-
-export { drawFlashcardsReadMode, drawFlashcardsEditMode }
+export { drawDeckReadMode, drawDeckEditMode }
