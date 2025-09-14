@@ -2,7 +2,7 @@
 
 const BACKEND_URL = "http://localhost:3222"
 
-async function userRegister(name, password) {
+async function registerUser(name, password) {
     try {
         const response = await fetch(`${BACKEND_URL}/register`, {
             method: "POST",
@@ -23,7 +23,7 @@ async function userRegister(name, password) {
     }
 }
 
-async function userLogin(name, password) {
+async function loginUser(name, password) {
     try {
         const response = await fetch(`${BACKEND_URL}/login`, {
             method: "POST",
@@ -47,38 +47,67 @@ async function userLogin(name, password) {
     }
 }
 
-async function requestDeck() {
-    const topic = document.getElementById("input-topic").value.trim();
-    const count = document.getElementById("input-card-count").value;
-    const length = document.querySelector('input[name="length"]:checked')?.value;
-    const mode = document.querySelector('input[name="mode"]:checked')?.value;
-
-    const requestBody = {
-        topic,
-        cardCount: count,
-        contentLength: length,
-        mode,
-    };
-
-    const token = localStorage.getItem("authToken");
-
-    const response = await fetch(`${BACKEND_URL}/flashcards/generate-deck`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            ...(token ? { Authorization: `Bearer ${token}` } : {})
-        },
-        body: JSON.stringify(requestBody),
-    });
-
-    if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to generate deck");
+async function generateDeck() {
+    try {
+        const topic = document.getElementById("input-topic").value.trim();
+        const count = document.getElementById("input-card-count").value;
+        const length = document.querySelector('input[name="length"]:checked')?.value;
+        const mode = document.querySelector('input[name="mode"]:checked')?.value;
+    
+        const requestBody = {
+            topic,
+            cardCount: count,
+            contentLength: length,
+            mode,
+        };
+    
+        const token = localStorage.getItem("authToken");
+    
+        const response = await fetch(`${BACKEND_URL}/flashcards/generate-deck`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                ...(token ? { Authorization: `Bearer ${token}` } : {})
+            },
+            body: JSON.stringify(requestBody),
+        });
+    
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || "Failed to generate deck");
+        }
+    
+        const { deck } = await response.json();
+    
+        return deck;
+    } catch (error) {
+        console.error("Request deck error: ", error.message);
     }
-
-    const { deck } = await response.json();
-
-    return deck;
 }
 
-export { userRegister, userLogin, requestDeck }
+async function uploadDeck(deck) {
+    try {
+        const token = localStorage.getItem("authToken");
+        
+        const response = await fetch(`${BACKEND_URL}/flashcards/upload-deck`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                ...(token ? { Authorization: `Bearer ${token}` } : {})
+            },
+            body: JSON.stringify(deck),
+        });
+    
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || "Failed to upload deck");
+        }
+
+        return true;
+    } catch (error) {
+        console.error("Request deck error: ", error.message);
+        return false;
+    }
+}
+
+export { registerUser, loginUser, generateDeck, uploadDeck }

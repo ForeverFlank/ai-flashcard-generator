@@ -1,4 +1,4 @@
-import { currentMode } from "./flashcards.js";
+"use strict";
 
 const colorPallets = ["#f4c348ff", "#4fdd98ff", "#469defff", "#ed55ebff"];
 
@@ -13,11 +13,11 @@ function getCardColor(question) {
     return colorPallets[n];
 }
 
-function drawFlashcardsReadMode(data) {
+function drawFlashcardsReadMode(deck) {
     const container = document.getElementById("flashcards-container");
     container.innerHTML = "";
 
-    data.flashcards.forEach((card) => {
+    deck.flashcards.forEach((card) => {
         const flashcard = document.createElement("div");
         flashcard.classList.add("flashcard");
 
@@ -66,11 +66,11 @@ function drawFlashcardsReadMode(data) {
     });
 }
 
-function draweFlashcardsEditMode(data) {
+function drawFlashcardsEditMode(deck) {
     const container = document.getElementById("flashcards-container");
     container.innerHTML = "";
 
-    data.flashcards.forEach((card) => {
+    deck.flashcards.forEach((card) => {
         const flashcard = document.createElement("div");
         flashcard.classList.add("flashcard");
         flashcard.style.height = "12rem";
@@ -94,12 +94,12 @@ function draweFlashcardsEditMode(data) {
         const questionInput = document.createElement("textarea");
         questionInput.value = card.q;
         questionInput.classList.add("card-input");
-        questionInput.oninput = e => card.q = e.target.value;
+        questionInput.oninput = e => card.qEdited = e.target.value;
 
         const answerInput = document.createElement("textarea");
         answerInput.value = card.a;
         answerInput.classList.add("card-input");
-        answerInput.oninput = e => card.a = e.target.value;
+        answerInput.oninput = e => card.aEdited = e.target.value;
 
         editor.appendChild(questionLabel);
         editor.appendChild(questionInput);
@@ -115,4 +115,4 @@ function draweFlashcardsEditMode(data) {
 }
 
 
-export { drawFlashcardsReadMode, draweFlashcardsEditMode }
+export { drawFlashcardsReadMode, drawFlashcardsEditMode }
