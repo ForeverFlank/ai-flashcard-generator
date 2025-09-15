@@ -40,7 +40,7 @@
             <button id="btn-new-deck" class="btn-user-menu">New deck</button>
             <button id="btn-my-decks" class="btn-user-menu">My decks</button>
             <hr>
-            <button id="btn-sign-out" class="btn-red">Sign out</button>
+            <button id="btn-sign-out" class="btn-sign-out">Sign out</button>
           </div>
 
           <form id="header-user-menu-sign-up">
@@ -139,25 +139,28 @@
     </div>
 
     <div id="deck-container" class="deck-container" style="display: none;">
-      <div>
-        <h2 id="deck-title">Title</h2>
-        <h3 id="deck-author">By Username</h3>
+      <div class="deck-title-container">
+        <div>
+          <h2 id="deck-title" class="text-large">Title</h2>
+          <h3 id="deck-author">By Username</h3>
+        </div>
+        <div id="deck-edit-toggle-container" style="display: block;">
+          <button id="btn-edit-deck">Edit</button>
+        </div>
+        <div id="deck-save-cancel-container" style="display: none;">
+          <button id="btn-edit-mode-save">Save</button>
+          <button id="btn-edit-mode-cancel" class="btn-red">Cancel</button>
+        </div>
       </div>
-      <button id="btn-edit-deck">Edit</button>
 
       <div class="deck-container-inner">
         <div id="flashcards-container" class="flashcards-container">
         </div>
       </div>
-
-      <div class="deck-edit-buttons-container">
-        <button id="btn-edit-mode-save">Save</button>
-        <button id="btn-edit-mode-cancel">Cancel</button>
-      </div>
     </div>
 
     <div id="user-container" class="user-container" style="display: none;">
-      <h2 id="user-container-name">Username's decks</h2>
+      <h2 id="user-container-name" class="text-large">Username's decks</h2>
       <hr>
       <table>
         <thead>

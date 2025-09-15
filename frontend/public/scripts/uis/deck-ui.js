@@ -1,15 +1,11 @@
 "use strict";
 
-import { cancelEditedFlashcards, saveEditedFlashcards, toggleModeAndDrawFlashcards } from "../flashcards.js";
+import { cancelEditedFlashcards, currentDeck, currentMode, saveEditedFlashcards, toggleModeAndDrawFlashcards } from "../flashcards.js";
 import { svgTrash } from "../icons.js";
 
-const colorPallets = ["#f4c348ff", "#4fdd98ff", "#469defff", "#ed55ebff"];
-
-const container = document.getElementById("flashcards-container");
-const titleElement = document.getElementById("deck-title");
-const authorElement = document.getElementById("deck-author");
-
 function getCardColor(question) {
+    const colorPallets = ["#f4c348ff", "#4fdd98ff", "#469defff", "#ed55ebff"];
+
     let n = 0xCED7;
     for (const char of question) {
         n ^= char.charCodeAt(0);
@@ -20,8 +16,18 @@ function getCardColor(question) {
     return colorPallets[n];
 }
 
+const flashcardContainer = document.getElementById("flashcards-container");
+const editContainer = document.getElementById("deck-edit-toggle-container");
+const saveContainer = document.getElementById("deck-save-cancel-container");
+
 function drawDeckReadMode(deck = null) {
-    container.innerHTML = "";
+    editContainer.style.display = "flex";
+    saveContainer.style.display = "none";
+
+    const titleElement = document.getElementById("deck-title");
+    const authorElement = document.getElementById("deck-author");
+
+    flashcardContainer.innerHTML = "";
     titleElement.innerText = "";
     authorElement.innerText = "";
 
@@ -60,7 +66,7 @@ function drawDeckReadMode(deck = null) {
         inner.appendChild(back);
 
         flashcard.appendChild(inner);
-        container.appendChild(flashcard);
+        flashcardContainer.appendChild(flashcard);
 
         flashcard.onclick = () => {
             const classList = inner.classList;
@@ -124,11 +130,14 @@ function drawFlashcardEditMode(card, addButton) {
     inner.appendChild(editor);
 
     flashcard.appendChild(inner);
-    container.insertBefore(flashcard, addButton);
+    flashcardContainer.insertBefore(flashcard, addButton);
 }
 
 function drawDeckEditMode(deck) {
-    container.innerHTML = "";
+    editContainer.style.display = "none";
+    saveContainer.style.display = "flex";
+
+    flashcardContainer.innerHTML = "";
 
     const addButton = document.createElement("button");
     addButton.classList.add("btn-add-flashcard");
@@ -147,7 +156,7 @@ function drawDeckEditMode(deck) {
         drawFlashcardEditMode(card, addButton);
     };
 
-    container.appendChild(addButton);
+    flashcardContainer.appendChild(addButton);
     deck.flashcards.forEach((card) => drawFlashcardEditMode(card, addButton));
 }
 
@@ -155,7 +164,6 @@ function tryDrawSharedDeck() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const id = urlParams.get("deckId");
-    console.log(id)
 }
 
 function setupDeckUI() {

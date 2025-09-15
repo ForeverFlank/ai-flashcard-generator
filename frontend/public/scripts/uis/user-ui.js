@@ -1,8 +1,8 @@
 "use strict";
 
-import { deleteDeckById, getDeckById, getDecksByUsername } from "../apis/deck-api.js";
+import { deleteDeckById, getDecksByUsername } from "../apis/deck-api.js";
+import { loadAndDrawDeck } from "../flashcards.js";
 import { displayPages } from "./app-ui.js";
-import { drawDeckReadMode } from "./deck-ui.js";
 
 const usernameElement = document.getElementById("user-container-name");
 const decksTable = document.getElementById("user-decks-tbody");
@@ -11,7 +11,7 @@ async function drawUserPage(username) {
     usernameElement.innerText = username + "'s decks";
     decksTable.innerHTML = "";
 
-    const decks = await getDecksByUsername(username);
+    const decks = await getDecksByUsername(username).then(r => r.decks);
     for (const deck of decks) {
         const tr = document.createElement("tr");
 
@@ -24,9 +24,7 @@ async function drawUserPage(username) {
         viewBtn.innerText = "View";
         viewBtn.addEventListener("click", async () => {
             displayPages(["deck"]);
-            drawDeckReadMode();
-            const res = await getDeckById(deck._id);
-            drawDeckReadMode(res.deck);
+            loadAndDrawDeck(deck._id);
         });
         view.appendChild(viewBtn);
         

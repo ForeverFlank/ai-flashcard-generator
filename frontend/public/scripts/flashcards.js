@@ -1,15 +1,20 @@
 "use strict";
 
-import { generateDeck, uploadDeck } from "./apis/deck-api.js";
+import { generateDeck, getDeckById, uploadDeck } from "./apis/deck-api.js";
 import { drawDeckReadMode, drawDeckEditMode } from "./uis/deck-ui.js";
 
 let currentDeck = null;
 let currentMode = "read";
 
-async function requestAndDrawFlashcards() {
-    currentDeck = await generateDeck();
+async function generateAndDrawDeck() {
+    currentDeck = await generateDeck().then(r => r.deck);
     currentMode = "read";
-    console.log(currentDeck)
+    drawDeckReadMode(currentDeck);
+}
+
+async function loadAndDrawDeck(id) {
+    drawDeckReadMode();
+    currentDeck = await getDeckById(id).then(r => r.deck);
     drawDeckReadMode(currentDeck);
 }
 
@@ -35,7 +40,7 @@ async function saveEditedFlashcards() {
         delete card.qEdited;
         delete card.aEdited;
     });
-    const success = await uploadDeck(currentDeck);
+    await uploadDeck(currentDeck);
     currentMode = "read";
     drawDeckReadMode(currentDeck);
 }
@@ -53,6 +58,5 @@ function cancelEditedFlashcards() {
 
 export {
     currentDeck, currentMode,
-    requestAndDrawFlashcards, toggleModeAndDrawFlashcards,
-    saveEditedFlashcards, cancelEditedFlashcards
+    generateAndDrawDeck, loadAndDrawDeck, toggleModeAndDrawFlashcards, saveEditedFlashcards, cancelEditedFlashcards
 }

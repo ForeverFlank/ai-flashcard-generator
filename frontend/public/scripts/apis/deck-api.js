@@ -32,9 +32,8 @@ async function generateDeck() {
             throw new Error(errorData.error || "Failed to generate deck");
         }
 
-        const { deck } = await res.json();
-
-        return deck;
+        const data = await res.json();
+        return data;
     } catch (error) {
         console.error("Request deck error: ", error.message);
     }
@@ -82,9 +81,8 @@ async function getDeckById(id) {
             throw new Error(errorData.error || "Failed to fetch deck");
         }
 
-        const deck = await res.json();
-        return deck;
-
+        const data = await res.json();
+        return data;
     } catch (error) {
         console.error("Error fetching deck:", error.message);
         return null;
@@ -103,7 +101,7 @@ async function getDecksByUsername(name) {
         }
 
         const data = await res.json();
-        return data.decks;
+        return data;
     } catch (error) {
         console.error("Error fetching decks by username:", error);
         throw error;
