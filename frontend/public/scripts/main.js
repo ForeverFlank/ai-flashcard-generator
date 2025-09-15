@@ -13,7 +13,5 @@ document.addEventListener("DOMContentLoaded", async () => {
     setupGeneratorUI();
     setupDeckUI();
 
-    tryDrawSharedDeck();
+    await tryDrawSharedDeck();
 });
-
-// displayPages(["user"])

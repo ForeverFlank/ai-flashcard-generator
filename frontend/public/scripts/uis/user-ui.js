@@ -1,7 +1,7 @@
 "use strict";
 
 import { deleteDeckById, getDecksByUsername } from "../apis/deck-api.js";
-import { loadAndDrawDeck } from "../flashcards.js";
+import { loadAndDrawDeck } from "../deck.js";
 import { displayPages } from "./app-ui.js";
 
 const usernameElement = document.getElementById("user-container-name");

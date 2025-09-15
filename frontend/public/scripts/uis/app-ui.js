@@ -55,6 +55,8 @@ function displayPages(pages) {
             userPage.style.display = "flex";
         }
     });
+
+    window.scrollTo(0, 0);
 }
 
 export { displayPages }

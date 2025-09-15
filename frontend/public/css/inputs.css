@@ -13,6 +13,11 @@
     transition: 100ms;
 }
 
+.pill:hover {
+    background-color: var(--dark-15);
+    border: 1px solid var(--dark-25);
+}
+
 .pill input[type="radio"] {
     position: absolute;
     opacity: 0;

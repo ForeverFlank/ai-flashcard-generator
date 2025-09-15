@@ -1,7 +1,9 @@
 "use strict";
 
-import { cancelEditedFlashcards, currentDeck, currentMode, saveEditedFlashcards, toggleModeAndDrawFlashcards } from "../flashcards.js";
+import { BACKEND_URL, FRONTEND_URL } from "../config.js";
+import { cancelEditedDeck, currentDeck, loadAndDrawDeck, saveEditedDeck, toggleModeAndDrawDeck } from "../deck.js";
 import { svgTrash } from "../icons.js";
+import { displayPages } from "./app-ui.js";
 
 function getCardColor(question) {
     const colorPallets = ["#f4c348ff", "#4fdd98ff", "#469defff", "#ed55ebff"];
@@ -160,18 +162,28 @@ function drawDeckEditMode(deck) {
     deck.flashcards.forEach((card) => drawFlashcardEditMode(card, addButton));
 }
 
-function tryDrawSharedDeck() {
+async function tryDrawSharedDeck() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const id = urlParams.get("deckId");
+    const id = urlParams.get("deck_id");
+
+    if (id) {
+        displayPages(["deck"]);
+        await loadAndDrawDeck(id);
+    }
 }
 
 function setupDeckUI() {
-    document.getElementById("btn-edit-deck").addEventListener("click", toggleModeAndDrawFlashcards);
+    document.getElementById("btn-edit-deck").addEventListener("click", toggleModeAndDrawDeck);
 
-    document.getElementById("btn-edit-mode-save").addEventListener("click", saveEditedFlashcards);
+    document.getElementById("btn-edit-mode-save").addEventListener("click", saveEditedDeck);
 
-    document.getElementById("btn-edit-mode-cancel").addEventListener("click", cancelEditedFlashcards);
+    document.getElementById("btn-edit-mode-cancel").addEventListener("click", cancelEditedDeck);
+
+    document.getElementById("btn-share-deck").addEventListener("click", () => {
+        const url = `${FRONTEND_URL}/?deck_id=${currentDeck._id}`;
+        navigator.clipboard.writeText(url);
+    });
 }
 
 export { drawDeckReadMode, drawDeckEditMode, tryDrawSharedDeck, setupDeckUI }

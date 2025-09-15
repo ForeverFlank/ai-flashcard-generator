@@ -1,6 +1,6 @@
 "use strict";
 
-import { generateAndDrawDeck } from "../flashcards.js";
+import { generateAndDrawDeck } from "../deck.js";
 import { displayPages } from "./app-ui.js";
 
 function setupGeneratorUI() {

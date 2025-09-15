@@ -15,7 +15,7 @@ router.post("/flashcards/upload-deck", authMiddleware, storeDeck);
 
 router.get("/users/:name/decks", getDecksByUsername);
 
-router.get("/deck/:id", authMiddleware, getDeckById);
+router.get("/deck/:id", getDeckById);
 router.delete("/deck/:id", authMiddleware, deleteDeckById);
 
 export { router };

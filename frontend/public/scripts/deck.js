@@ -18,7 +18,7 @@ async function loadAndDrawDeck(id) {
     drawDeckReadMode(currentDeck);
 }
 
-function toggleModeAndDrawFlashcards() {
+function toggleModeAndDrawDeck() {
     if (currentMode === "read") {
         currentMode = "edit";
         drawDeckEditMode(currentDeck);
@@ -28,7 +28,7 @@ function toggleModeAndDrawFlashcards() {
     }
 }
 
-async function saveEditedFlashcards() {
+async function saveEditedDeck() {
     currentDeck.flashcards = currentDeck.flashcards.filter((card) => !card.toBeDeleted);
     currentDeck.flashcards.forEach((card) => {
         if (card.qEdited) {
@@ -45,7 +45,7 @@ async function saveEditedFlashcards() {
     drawDeckReadMode(currentDeck);
 }
 
-function cancelEditedFlashcards() {
+function cancelEditedDeck() {
     currentDeck.flashcards = currentDeck.flashcards.filter((card) => !card.recentlyCreated);
     currentDeck.flashcards.forEach((card) => {
         delete card.toBeDeleted;
@@ -58,5 +58,5 @@ function cancelEditedFlashcards() {
 
 export {
     currentDeck, currentMode,
-    generateAndDrawDeck, loadAndDrawDeck, toggleModeAndDrawFlashcards, saveEditedFlashcards, cancelEditedFlashcards
+    generateAndDrawDeck, loadAndDrawDeck, toggleModeAndDrawDeck, saveEditedDeck, cancelEditedDeck
 }
