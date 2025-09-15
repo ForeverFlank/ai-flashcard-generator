@@ -7,7 +7,6 @@
 .pill {
     display: inline-flex;
     align-items: center;
-    border-radius: 999px;
     padding: 0.25rem 0.5rem;
     cursor: pointer;
     user-select: none;
@@ -60,10 +59,16 @@
     width: 2em;
 }
 
+.input-number-group input {
+    border-radius: 0;
+}
+
 .input-number-minus {
+    padding: 0;
     border-radius: 999px 0 0 999px;
 }
 
 .input-number-plus {
+    padding: 0;
     border-radius: 0 999px 999px 0;
 }

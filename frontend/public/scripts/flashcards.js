@@ -1,7 +1,7 @@
 "use strict";
 
 import { generateDeck, uploadDeck } from "./apis/flashcard-api.js";
-import { drawDeckReadMode, drawDeckEditMode } from "./uis/flashcard-ui.js";
+import { drawDeckReadMode, drawDeckEditMode } from "./uis/deck-ui.js";
 
 let currentDeck = null;
 let currentMode = "read";

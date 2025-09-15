@@ -65,9 +65,37 @@ async function uploadDeck(deck) {
     }
 }
 
+async function getDeckById(id) {
+    try {
+        const token = localStorage.getItem("authToken");
+
+        const res = await fetch(`${BACKEND_URL}/deck/${id}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                ...(token ? { Authorization: `Bearer ${token}` } : {})
+            }
+        });
+
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.error || "Failed to fetch deck");
+        }
+
+        const deck = await res.json();
+        return deck;
+
+    } catch (error) {
+        console.error("Error fetching deck:", error.message);
+        return null;
+    }
+}
+
 async function getDecksByUsername(name) {
     try {
-        const res = await fetch(`${BACKEND_URL}/users/${encodeURIComponent(name)}/decks`);
+        const res = await fetch(`${BACKEND_URL}/users/${encodeURIComponent(name)}/decks`, {
+            method: "GET"
+        });
 
         if (!res.ok) {
             const err = await res.json();
@@ -82,4 +110,4 @@ async function getDecksByUsername(name) {
     }
 }
 
-export { generateDeck, uploadDeck, getDecksByUsername }
+export { generateDeck, uploadDeck, getDeckById, getDecksByUsername }

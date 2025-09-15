@@ -20,9 +20,15 @@ input, button, .pill {
     background-color: #212329;
     border: 1px solid #3e3f45;
     outline: none;
+    border-radius: 999px;
+}
+
+input {
+    padding: 0.25rem 0.75rem;
 }
 
 button {
+    padding: 0.25rem 1rem;
     cursor: pointer;
     transition: 150ms;
 }
@@ -55,6 +61,11 @@ button {
     line-height: 0;
 }
 
+.header-user-not-logged-in button {
+    padding: 0.25rem 1rem;
+    margin-left: 0.5rem;
+}
+
 .btn-user {
     width: 3em;
     height: 3em;
@@ -68,8 +79,9 @@ button {
 }
 
 .user-menu {
+    position: sticky;
+    top: 3.5rem;
     display: flex;
-    margin-top: 0.25rem;
     flex-direction: column;
     justify-content: stretch;
     align-items: center;
@@ -87,19 +99,6 @@ button {
     width: 100%;
 }
 
-.user-menu button {
-    width: 100%;
-    background: none;
-    padding: 0.25rem 0;
-    margin: 0.25rem 0;
-    border-radius: 999px;
-}
-
-.user-menu input {
-    padding: 0.25rem 0.25rem;
-    margin: 0.25rem 0;
-}
-
 .user-menu form p {
     margin-top: 0.5rem;
     margin-bottom: 0.25rem;
@@ -107,6 +106,10 @@ button {
 
 .btn-user-menu {
     background-color: #212329;
+    width: 100%;
+    background: none;
+    padding: 0.25rem 0;
+    margin: 0.25rem 0;
 }
 
 .btn-sign-up {
@@ -356,4 +359,54 @@ button {
     width: 100%;
     padding: 0.5rem 2rem;
     border-radius: 999px;
+}
+
+/* User */
+
+.user-container {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.user-container p {
+    font-size: 2rem;
+    margin: 0rem 0;
+}
+
+.user-container hr {
+    width: 100%;
+    margin: 1rem 0;
+    border: 1px solid #3e3f45;
+}
+
+.user-container table {
+    border-collapse: collapse;
+}
+
+.user-container table thead tr {
+    background-color: #3e3f45;
+    text-align: left;
+}
+
+.user-container th {
+    padding: 0.75rem 0.5rem;
+}
+
+.user-container table tbody tr:nth-child(even) {
+    background-color: #181b22;
+}
+
+.user-container table td {
+    padding: 0.5rem;
+}
+
+.table-grow {
+    width: 100%
+}
+
+.btn-delete-deck {
+    background-color: lch(15 15 30);
+    border: 1px solid lch(50 50 30);
 }

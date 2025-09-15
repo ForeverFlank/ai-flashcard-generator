@@ -104,6 +104,7 @@ async function getDecksByUsername(req, res) {
         const formatted = decks.map(deck => {
             const obj = deck.toObject();
             obj.author = user.name;
+            delete obj.flashcards;
             delete obj.user;
             return obj;
         });

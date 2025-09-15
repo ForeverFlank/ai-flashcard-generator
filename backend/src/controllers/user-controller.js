@@ -24,26 +24,30 @@ async function signupUser(req, res) {
             Date.now() + 7 * 24 * 60 * 60 * 1000
         );
 
-        res.status(201).json({ token });
+        res.status(201).json({ token, id: user._id, name: user.name });
     } catch (err) {
         res.status(400).json({ error: err.message });
     }
 }
 
 async function loginUser(req, res) {
-    const { name, password } = req.body;
-    const user = await User.findOne({ name });
-    if (!user || !(await user.comparePassword(password))) {
-        return res.status(401).json({ error: "Invalid credentials" });
+    try {
+        const { name, password } = req.body;
+        const user = await User.findOne({ name });
+        if (!user || !(await user.comparePassword(password))) {
+            return res.status(401).json({ error: "Invalid credentials" });
+        }
+
+        const token = generateToken(
+            user._id,
+            Date.now(),
+            Date.now() + 7 * 24 * 60 * 60 * 1000
+        );
+
+        res.json({ token, id: user._id, name: user.name });
+    } catch (err) {
+        res.status(400).json({ error: err.message });
     }
-
-    const token = generateToken(
-        user._id,
-        Date.now(),
-        Date.now() + 7 * 24 * 60 * 60 * 1000
-    );
-
-    res.json({ token });
 }
 
 export { signupUser, loginUser }

@@ -20,19 +20,21 @@
         <p>FlashGen</p>
       </div>
       <div>
-        <button id="btn-user" class="btn-user">
-          <svg xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
-            <path
-              d="M463 448.2C440.9 409.8 399.4 384 352 384L288 384C240.6 384 199.1 409.8 177 448.2C212.2 487.4 263.2 512 320 512C376.8 512 427.8 487.3 463 448.2zM64 320C64 178.6 178.6 64 320 64C461.4 64 576 178.6 576 320C576 461.4 461.4 576 320 576C178.6 576 64 461.4 64 320zM320 336C359.8 336 392 303.8 392 264C392 224.2 359.8 192 320 192C280.2 192 248 224.2 248 264C248 303.8 280.2 336 320 336z" />
-          </svg>
-        </button>
+        <div id="header-user-not-logged-in" class="header-user-not-logged-in" style="display: none;">
+          <button id="btn-log-in" class="btn-log-in">Log in</button>
+          <button id="btn-sign-up" class="btn-sign-up">Sign up</button>
+        </div>
+        <div id="header-user-logged-in" class="header-user-logged-in" style="display: none;">
+          <button id="btn-user" class="btn-user">
+            <svg xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+              <path
+                d="M463 448.2C440.9 409.8 399.4 384 352 384L288 384C240.6 384 199.1 409.8 177 448.2C212.2 487.4 263.2 512 320 512C376.8 512 427.8 487.3 463 448.2zM64 320C64 178.6 178.6 64 320 64C461.4 64 576 178.6 576 320C576 461.4 461.4 576 320 576C178.6 576 64 461.4 64 320zM320 336C359.8 336 392 303.8 392 264C392 224.2 359.8 192 320 192C280.2 192 248 224.2 248 264C248 303.8 280.2 336 320 336z" />
+            </svg>
+          </button>
+        </div>
+
         <div id="header-user-menu" class="user-menu" style="display: none;">
-          <div id="header-user-menu-not-logged-in" style="display: none;">
-            <p>Not logged in!</p>
-            <button id="btn-log-in" class="btn-user-menu">Log in</button>
-            <button id="btn-sign-up" class="btn-sign-up">Sign up</button>
-          </div>
           <div id="header-user-menu-logged-in" style="display: none;">
             <p>Logged in as:<br><span id="user-menu-username">User</span></p>
             <button id="btn-new-deck" class="btn-user-menu">New deck</button>
@@ -66,14 +68,17 @@
   </header>
 
   <main>
+    <div style="margin: 8rem 0;"></div>
+
     <div id="generator-container" class="app-container" style="display: flex;">
       <h1>AI Flashcard Generator</h1>
 
       <form class="generator-form">
         <div class="generator-input-field">
-          <input type="text" id="input-topic" placeholder="Enter topic here" required/>
+          <input type="text" id="input-topic" placeholder="Enter topic here" required />
 
-          <button id="btn-generator-submit" type="button" disabled style="opacity: 0; pointer-events: none;">Generate</button>
+          <button id="btn-generator-submit" type="button" disabled
+            style="opacity: 0; pointer-events: none;">Generate</button>
         </div>
 
         <div class="generator-input-options">
@@ -123,7 +128,7 @@
         </div>
       </form>
     </div>
-    
+
     <div id="loading-container" class="loading-container" style="display: none;">
       <div style="margin: 4rem 0;"></div>
       <p>Generating flashcards. Hang tight!</p>
@@ -147,23 +152,21 @@
       </div>
     </div>
 
-    <div id="user-container" class="user-container">
-      <p>Username</p>
+    <div id="user-container" class="user-container" style="display: none;">
+      <p id="user-container-name">Username's decks</p>
       <hr>
-      <p>Decks</p>
       <table>
-        <tr>
-          <th>Title</th>
-          <th></th>
-          <th>Modified</th>
-          <th></th>
-        </tr>
-        <tr>
-          <td>Deck 1</td>
-          <td><button>View</button></td>
-          <td>2025-09-15</td>
-          <td><button>Delete</button></td>
-        </tr>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th></th>
+            <!-- <th>Modified</th> -->
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="user-decks-tbody">
+
+        </tbody>
       </table>
     </div>
 

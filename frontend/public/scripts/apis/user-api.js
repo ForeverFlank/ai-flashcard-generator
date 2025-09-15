@@ -19,6 +19,7 @@ async function signupUser(name, password) {
 
         const data = await res.json();
         localStorage.setItem("authToken", data.token);
+        loggedInUser = { id: data.id, name: data.name };
 
         return data.token;
     } catch (error) {
@@ -42,6 +43,7 @@ async function loginUser(name, password) {
 
         const data = await res.json();
         localStorage.setItem("authToken", data.token);
+        loggedInUser = { id: data.id, name: data.name };
 
         return data.token;
     } catch (error) {
@@ -64,6 +66,7 @@ async function checkAuth() {
 
         if (res.status === 401) {
             localStorage.removeItem("authToken");
+            loggedInUser = null;
             return false;
         }
 
@@ -79,5 +82,6 @@ function signOut() {
     loggedInUser = null;
     localStorage.clear("authToken");
 }
+
 
 export { loggedInUser, loginUser, signupUser, checkAuth, signOut }
