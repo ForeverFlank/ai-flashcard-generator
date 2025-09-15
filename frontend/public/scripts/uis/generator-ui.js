@@ -2,7 +2,7 @@
 
 import { displayPages } from "./app-ui.js";
 
-function setupGeneratorMenu() {
+function setupGeneratorUI() {
     const input = document.getElementById("input-topic");
     const button = document.getElementById("btn-generator-submit");
 
@@ -21,4 +21,4 @@ function setupGeneratorMenu() {
     });
 }
 
-export { setupGeneratorMenu }
+export { setupGeneratorUI }

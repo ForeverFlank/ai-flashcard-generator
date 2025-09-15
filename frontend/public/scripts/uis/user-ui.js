@@ -1,6 +1,6 @@
 "use strict";
 
-import { getDeckById, getDecksByUsername } from "../apis/flashcard-api.js";
+import { deleteDeckById, getDeckById, getDecksByUsername } from "../apis/deck-api.js";
 import { displayPages } from "./app-ui.js";
 import { drawDeckReadMode } from "./deck-ui.js";
 
@@ -23,16 +23,21 @@ async function drawUserPage(username) {
         const viewBtn = document.createElement("button");
         viewBtn.innerText = "View";
         viewBtn.addEventListener("click", async () => {
+            displayPages(["deck"]);
+            drawDeckReadMode();
             const res = await getDeckById(deck._id);
             drawDeckReadMode(res.deck);
-            displayPages(["deck"]);
         });
         view.appendChild(viewBtn);
         
         const del = document.createElement("td");
         const delBtn = document.createElement("button");
         delBtn.innerText = "Delete";
-        delBtn.classList.add("btn-delete-deck");
+        delBtn.classList.add("btn-red");
+        delBtn.addEventListener("click", async () => {
+            await deleteDeckById(deck._id);
+            drawUserPage(username);
+        });
         del.appendChild(delBtn);
 
         tr.appendChild(title);

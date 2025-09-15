@@ -110,4 +110,32 @@ async function getDecksByUsername(name) {
     }
 }
 
-export { generateDeck, uploadDeck, getDeckById, getDecksByUsername }
+async function deleteDeckById(id) {
+    try {
+        const token = localStorage.getItem("authToken");
+
+        const res = await fetch(`${BACKEND_URL}/deck/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                ...(token ? { Authorization: `Bearer ${token}` } : {})
+            }
+        });
+
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.error || "Failed to delete deck");
+        }
+
+        const result = await res.json();
+        console.log("Deck deleted:", result.message);
+        return true;
+
+    } catch (error) {
+        console.error("Error deleting deck:", error.message);
+        return false;
+    }
+}
+
+
+export { generateDeck, uploadDeck, getDeckById, getDecksByUsername, deleteDeckById }

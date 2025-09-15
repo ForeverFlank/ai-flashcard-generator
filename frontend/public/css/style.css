@@ -12,6 +12,8 @@ body {
     margin: 0;
 }
 
+/* Generic */
+
 .weight-600 {
     font-weight: 600;
 }
@@ -39,7 +41,19 @@ button {
     color: lch(50 50 30);
 }
 
-.header-container {
+.btn-blue {
+    background-color: lch(15 15 270);
+    border: 1px solid lch(50 50 270);
+}
+
+.btn-red {
+    background-color: lch(15 15 30);
+    border: 1px solid lch(50 50 30);
+}
+
+/* Top bar */
+
+.top-bar-container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -54,14 +68,14 @@ button {
     border-bottom: 1px solid #3e3f45;
 }
 
-.header-container>div>p {
+.top-bar-container>div>p {
     padding: 0 0.5rem;
     font-size: 1.25rem;
     font-weight: bold;
     line-height: 0;
 }
 
-.header-user-not-logged-in button {
+.top-bar-user-not-logged-in button {
     padding: 0.25rem 1rem;
     margin-left: 0.5rem;
 }
@@ -112,17 +126,9 @@ button {
     margin: 0.25rem 0;
 }
 
-.btn-sign-up {
-    background-color: lch(15 15 270);
-    border: 1px solid lch(50 50 270);
-}
+/* Generator */
 
-.btn-sign-out {
-    background-color: lch(15 15 30);
-    border: 1px solid lch(50 50 30);
-}
-
-.app-container {
+.generator-container {
     position: relative;
     margin-top: 6rem;
     display: flex;
@@ -130,12 +136,23 @@ button {
     align-items: center;
 }
 
-.app-container h1 {
+.generator-container h1 {
+    max-width: 80%;
+    text-align: center;
     font-weight: 700;
     font-size: 48px;
+    margin-bottom: 3rem;
 }
 
-.app-container form {
+@media (max-width: 720px) {
+    .generator-container h1 {
+        font-weight: 700;
+        font-size: 36px;
+        margin-bottom: 2rem;
+    }
+}
+
+.generator-container form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -238,6 +255,7 @@ button {
 .generator-input-options>div>label {
     font-weight: 600;
     margin-left: 1px;
+    /* text-align: center; */
 }
 
 /* Throbber */
@@ -330,17 +348,22 @@ button {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-top: 1px solid #3e3f45;
-    border-bottom: 1px solid #3e3f45;
-    background-color: #181b22;
-    padding-top: 2rem;
-    padding-bottom: 4rem;
+}
+
+.deck-container>div:nth-child(1) {
+    width: 80%;
 }
 
 .deck-container h2 {
-    font-size: x-large;
-    font-weight: 600;
-    margin-top: none;
+    text-align: left;
+    font-size: 36px;
+    margin: 0;
+}
+
+.deck-container h3 {
+    text-align: left;
+    font-size: 18px;
+    margin-top: 0.5rem;
 }
 
 .deck-container>button {
@@ -361,6 +384,15 @@ button {
     border-radius: 999px;
 }
 
+.deck-container-inner {
+    border-top: 1px solid #3e3f45;
+    border-bottom: 1px solid #3e3f45;
+    background-color: #181b22;
+    width: 100%;
+    padding: 2rem 0;
+    margin: 2rem 0;
+}
+
 /* User */
 
 .user-container {
@@ -370,8 +402,8 @@ button {
     margin: 0 auto;
 }
 
-.user-container p {
-    font-size: 2rem;
+.user-container h2 {
+    font-size: 36px;
     margin: 0rem 0;
 }
 
@@ -404,9 +436,4 @@ button {
 
 .table-grow {
     width: 100%
-}
-
-.btn-delete-deck {
-    background-color: lch(15 15 30);
-    border: 1px solid lch(50 50 30);
 }

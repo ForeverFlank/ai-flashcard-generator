@@ -1,9 +1,13 @@
 "use strict";
 
+import { cancelEditedFlashcards, saveEditedFlashcards, toggleModeAndDrawFlashcards } from "../flashcards.js";
 import { svgTrash } from "../icons.js";
 
 const colorPallets = ["#f4c348ff", "#4fdd98ff", "#469defff", "#ed55ebff"];
+
 const container = document.getElementById("flashcards-container");
+const titleElement = document.getElementById("deck-title");
+const authorElement = document.getElementById("deck-author");
 
 function getCardColor(question) {
     let n = 0xCED7;
@@ -16,8 +20,15 @@ function getCardColor(question) {
     return colorPallets[n];
 }
 
-function drawDeckReadMode(deck) {
+function drawDeckReadMode(deck = null) {
     container.innerHTML = "";
+    titleElement.innerText = "";
+    authorElement.innerText = "";
+
+    if (deck === null) return;
+
+    titleElement.innerText = deck.name;
+    authorElement.innerText = "by: " + deck.author;
 
     deck.flashcards.forEach((card) => {
         const flashcard = document.createElement("div");
@@ -140,4 +151,19 @@ function drawDeckEditMode(deck) {
     deck.flashcards.forEach((card) => drawFlashcardEditMode(card, addButton));
 }
 
-export { drawDeckReadMode, drawDeckEditMode }
+function tryDrawSharedDeck() {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const id = urlParams.get("deckId");
+    console.log(id)
+}
+
+function setupDeckUI() {
+    document.getElementById("btn-edit-deck").addEventListener("click", toggleModeAndDrawFlashcards);
+
+    document.getElementById("btn-edit-mode-save").addEventListener("click", saveEditedFlashcards);
+
+    document.getElementById("btn-edit-mode-cancel").addEventListener("click", cancelEditedFlashcards);
+}
+
+export { drawDeckReadMode, drawDeckEditMode, tryDrawSharedDeck, setupDeckUI }

@@ -15,16 +15,16 @@
 
 <body>
   <header>
-    <div class="header-container">
+    <div class="top-bar-container">
       <div>
         <p>FlashGen</p>
       </div>
       <div>
-        <div id="header-user-not-logged-in" class="header-user-not-logged-in" style="display: none;">
+        <div id="header-user-not-logged-in" class="top-bar-user-not-logged-in" style="display: none;">
           <button id="btn-log-in" class="btn-log-in">Log in</button>
-          <button id="btn-sign-up" class="btn-sign-up">Sign up</button>
+          <button id="btn-sign-up" class="btn-blue">Sign up</button>
         </div>
-        <div id="header-user-logged-in" class="header-user-logged-in" style="display: none;">
+        <div id="header-user-logged-in" class="top-bar-user-logged-in" style="display: none;">
           <button id="btn-user" class="btn-user">
             <svg xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
@@ -40,7 +40,7 @@
             <button id="btn-new-deck" class="btn-user-menu">New deck</button>
             <button id="btn-my-decks" class="btn-user-menu">My decks</button>
             <hr>
-            <button id="btn-sign-out" class="btn-sign-out">Sign out</button>
+            <button id="btn-sign-out" class="btn-red">Sign out</button>
           </div>
 
           <form id="header-user-menu-sign-up">
@@ -70,7 +70,7 @@
   <main>
     <div style="margin: 8rem 0;"></div>
 
-    <div id="generator-container" class="app-container" style="display: flex;">
+    <div id="generator-container" class="generator-container" style="display: flex;">
       <h1>AI Flashcard Generator</h1>
 
       <form class="generator-form">
@@ -139,11 +139,15 @@
     </div>
 
     <div id="deck-container" class="deck-container" style="display: none;">
-      <h2 id="deck-title"></h2>
-      <!-- vvvvv use toggle ui for this -->
+      <div>
+        <h2 id="deck-title">Title</h2>
+        <h3 id="deck-author">By Username</h3>
+      </div>
       <button id="btn-edit-deck">Edit</button>
 
-      <div id="flashcards-container" class="flashcards-container">
+      <div class="deck-container-inner">
+        <div id="flashcards-container" class="flashcards-container">
+        </div>
       </div>
 
       <div class="deck-edit-buttons-container">
@@ -153,7 +157,7 @@
     </div>
 
     <div id="user-container" class="user-container" style="display: none;">
-      <p id="user-container-name">Username's decks</p>
+      <h2 id="user-container-name">Username's decks</h2>
       <hr>
       <table>
         <thead>

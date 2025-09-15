@@ -18,7 +18,7 @@ function updateTopRightUI() {
     }
 }
 
-function setupTopMenu() {
+function setupTopUI() {
     const userMenu = document.getElementById("header-user-menu");
     const loggedInMenu = document.getElementById("header-user-menu-logged-in");
     const signupMenu = document.getElementById("header-user-menu-sign-up");
@@ -100,4 +100,4 @@ function setupTopMenu() {
     });
 }
 
-export { setupTopMenu, updateTopRightUI }
+export { setupTopUI, updateTopRightUI }
