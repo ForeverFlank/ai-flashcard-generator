@@ -75,7 +75,7 @@
 
       <form class="generator-form">
         <div class="generator-input-field">
-          <input type="text" id="input-topic" placeholder="Enter topic here" required />
+          <input type="text" id="input-topic" placeholder="Enter topic here..." required />
 
           <button id="btn-generator-submit" type="button" disabled
             style="opacity: 0; pointer-events: none;">Generate</button>
@@ -214,9 +214,12 @@
     <div id="user-container" class="user-container" style="display: none;">
       <h2 id="user-container-name" class="text-large">Username's decks</h2>
       <hr>
+      <div id="user-throbber" class="throbber">
+        <div></div>
+        <div></div>
+      </div>
       <table>
         <tbody id="user-decks-tbody">
-
         </tbody>
       </table>
     </div>

@@ -19,7 +19,7 @@ function clearEl(el) {
 }
 
 function getCardColor(n) {
-    return ["#f4c348ff", "#4fdd98ff", "#469defff", "#ed55ebff"][n % 4];
+    return ["#f4c348ff", "#48c78aff", "#469defff", "#ed55ebff"][n % 4];
 }
 
 /* ---------- Containers ---------- */

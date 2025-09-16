@@ -4,6 +4,7 @@ import { deleteDeckById, getDecksByUsername } from "../apis/deck-api.js";
 import { loadAndDrawDeck } from "../deck.js";
 import { displayPages } from "./app-ui.js";
 
+const userThrobber = document.getElementById("user-throbber");
 const usernameElement = document.getElementById("user-container-name");
 const decksTable = document.getElementById("user-decks-tbody");
 
@@ -11,6 +12,7 @@ async function drawUserPage(username) {
     usernameElement.innerText = username + "'s decks";
     decksTable.innerHTML = "";
 
+    userThrobber.style.display = "block";
     const decks = await getDecksByUsername(username).then(r => r.decks);
     for (const deck of decks) {
         const tr = document.createElement("tr");
@@ -44,6 +46,7 @@ async function drawUserPage(username) {
 
         decksTable.appendChild(tr);
     }
+    userThrobber.style.display = "none";
 }
 
 export { drawUserPage }

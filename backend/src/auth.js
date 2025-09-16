@@ -3,9 +3,6 @@
 import { User } from "./models/user-model.js";
 
 function generateToken(userId, startTime, expireTime) {
-    const key = process.env.AUTH_TOKEN_KEY;
-    if (!key) throw new Error("Missing AUTH_TOKEN_KEY");
-
     const payload = {
         userId,
         iat: startTime || Date.now(),
@@ -14,26 +11,11 @@ function generateToken(userId, startTime, expireTime) {
     const payloadStr = JSON.stringify(payload);
     const payloadBase64 = Buffer.from(payloadStr).toString("base64");
 
-    const keyBuf = Buffer.from(key);
-    const tokenBuf = Buffer.from(payloadBase64);
-
-    for (let i = 0; i < tokenBuf.length; i++) {
-        tokenBuf[i] ^= keyBuf[i % keyBuf.length];
-    }
-
-    return tokenBuf.toString("base64");
+    return payloadBase64;
 }
 
 function verifyToken(token) {
-    const key = process.env.AUTH_TOKEN_KEY;
-    if (!key) throw new Error("Missing AUTH_TOKEN_KEY");
-
     const tokenBuf = Buffer.from(token, "base64");
-    const keyBuf = Buffer.from(key);
-
-    for (let i = 0; i < tokenBuf.length; i++) {
-        tokenBuf[i] ^= keyBuf[i % keyBuf.length];
-    }
 
     const payloadBase64 = tokenBuf.toString();
     const payloadStr = Buffer.from(payloadBase64, "base64").toString();
