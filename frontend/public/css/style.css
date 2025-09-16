@@ -93,12 +93,22 @@ button:hover {
     border-bottom: 1px solid var(--dark-20);
 }
 
+.top-bar-container>div:first {
+    display: flex;
+    flex-direction: row;
+}
+
 .top-bar-container>div>a {
     text-decoration: none;
     padding: 0 0.5rem;
     font-size: 1.25rem;
     font-weight: bold;
     line-height: 0;
+}
+
+.btn-clean, .btn-clean:hover {
+    background: none;
+    border: none;
 }
 
 .top-bar-user-not-logged-in button {
@@ -548,11 +558,6 @@ button:hover {
     border-collapse: collapse;
 }
 
-.user-container table thead tr {
-    background-color: var(--dark-20);
-    text-align: left;
-}
-
 .user-container th {
     padding: 0.75rem 0.5rem;
 }
@@ -567,4 +572,56 @@ button:hover {
 
 .table-grow {
     width: 100%
+}
+
+/* User */
+
+.explore-container {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.explore-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.explore-container h2 {
+    margin: 0;
+}
+
+.explore-container hr {
+    width: 100%;
+    margin: 1rem 0;
+    border: 1px solid var(--dark-20);
+}
+
+.explore-container table {
+    border-collapse: collapse;
+}
+
+.explore-container table thead tr {
+    background-color: var(--dark-15);
+    text-align: left;
+}
+
+.explore-container th {
+    padding: 0.75rem 0.5rem;
+}
+
+.explore-container table tbody tr:nth-child(even) {
+    background-color: #181b22;
+}
+
+.explore-container table td {
+    padding: 0.5rem;
+}
+
+.explore-header>div>input {
+    width: 2rem;
+    text-align: center;
 }

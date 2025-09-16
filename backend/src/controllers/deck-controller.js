@@ -180,11 +180,38 @@ async function deleteDeckById(req, res) {
     }
 }
 
+async function getLatestDecks(req, res) {
+    try {
+        const page = parseInt(req.params.page) || 1;
+        const limit = 20;
+        const skip = (page - 1) * limit;
+
+        const decks = await Deck.find({})
+            .sort({ updatedAt: -1 })
+            .skip(skip)
+            .limit(limit)
+            .populate("user", "name");
+
+        const formattedDecks = decks.map(deck => {
+            const obj = deck.toObject();
+            obj.author = deck.user?.name || "Anonymous";
+            delete obj.user;
+            return obj;
+        });
+
+        return res.status(200).json({ decks: formattedDecks });
+    } catch (e) {
+        console.error("Error fetching latest decks:", e);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
 export {
     generateDeck,
     modifyDeck,
     storeDeck,
     getDecksByUsername,
     getDeckById,
-    deleteDeckById
+    deleteDeckById,
+    getLatestDecks
 };

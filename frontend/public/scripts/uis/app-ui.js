@@ -38,11 +38,13 @@ function displayPage(page) {
     const deckPage = document.getElementById("deck-container");
     const viewPage = document.getElementById("view-container");
     const userPage = document.getElementById("user-container");
+    const explorePage = document.getElementById("explore-container");
 
     generatorPage.style.display = "none";
     deckPage.style.display = "none";
     viewPage.style.display = "none";
     userPage.style.display = "none";
+    explorePage.style.display = "none";
 
     if (page === "generator") {
         generatorPage.style.display = "flex";
@@ -52,6 +54,8 @@ function displayPage(page) {
         viewPage.style.display = "flex";
     } else if (page === "user") {
         userPage.style.display = "flex";
+    } else if (page === "explore") {
+        explorePage.style.display = "flex";
     }
 
     window.scrollTo(0, 0);

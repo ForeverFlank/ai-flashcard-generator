@@ -2,6 +2,7 @@
 
 import { loggedInUser, loginUser, signOut, signupUser } from "../apis/user-api.js";
 import { displayPage } from "./app-ui.js";
+import { drawLatestDecksTable } from "./explore-ui.js";
 import { drawUserPage } from "./user-ui.js";
 
 function updateTopRightUI() {
@@ -49,6 +50,12 @@ function setupTopUI() {
 
     userButton.addEventListener("click", () => {
         showMenuSection(loggedInMenu)
+    });
+
+    document.getElementById("btn-explore").addEventListener("click", () => {
+        displayPage("explore");
+        document.getElementById("input-page-num").value = 1;
+        drawLatestDecksTable(1);
     });
 
     document.getElementById("btn-sign-up").addEventListener("click", () => showMenuSection(signupMenu));

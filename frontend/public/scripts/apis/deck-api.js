@@ -172,5 +172,34 @@ async function deleteDeckById(id) {
     }
 }
 
+async function getLatestDecks(pageNum) {
+    try {
+        const res = await fetch(`${BACKEND_URL}/deck/latest/${pageNum}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
 
-export { generateDeck, modifyDeck, uploadDeck, getDeckById, getDecksByUsername, deleteDeckById }
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.error || "Failed to fetch latest decks");
+        }
+
+        const data = await res.json();
+        return data.decks;
+    } catch (error) {
+        console.error("Error fetching latest decks:", error.message);
+        return [];
+    }
+}
+
+export {
+    generateDeck,
+    modifyDeck,
+    uploadDeck,
+    getDeckById,
+    getDecksByUsername,
+    deleteDeckById,
+    getLatestDecks
+}
