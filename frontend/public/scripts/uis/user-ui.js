@@ -2,7 +2,7 @@
 
 import { deleteDeckById, getDecksByUsername } from "../apis/deck-api.js";
 import { loadAndDrawDeck } from "../deck.js";
-import { displayPages } from "./app-ui.js";
+import { displayPage } from "./app-ui.js";
 
 const userThrobber = document.getElementById("user-throbber");
 const usernameElement = document.getElementById("user-container-name");
@@ -25,7 +25,7 @@ async function drawUserPage(username) {
         const viewBtn = document.createElement("button");
         viewBtn.innerText = "View";
         viewBtn.addEventListener("click", async () => {
-            displayPages(["deck"]);
+            displayPage("deck");
             loadAndDrawDeck(deck._id);
         });
         view.appendChild(viewBtn);

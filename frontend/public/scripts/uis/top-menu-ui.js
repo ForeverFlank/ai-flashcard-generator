@@ -1,7 +1,7 @@
 "use strict";
 
 import { loggedInUser, loginUser, signOut, signupUser } from "../apis/user-api.js";
-import { displayPages } from "./app-ui.js";
+import { displayPage } from "./app-ui.js";
 import { drawUserPage } from "./user-ui.js";
 
 function updateTopRightUI() {
@@ -88,13 +88,13 @@ function setupTopUI() {
     });
 
     document.getElementById("btn-new-deck").addEventListener("click", () => {
-        displayPages(["generator"]);
+        displayPage("generator");
         userMenu.style.display = "none";
     });
 
     document.getElementById("btn-my-decks").addEventListener("click", async () => {
         if (!loggedInUser) return;
-        displayPages(["user"]);
+        displayPage("user");
         drawUserPage(loggedInUser.name);
         userMenu.style.display = "none";
     });

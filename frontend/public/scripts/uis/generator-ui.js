@@ -1,7 +1,7 @@
 "use strict";
 
 import { generateAndDrawDeck } from "../deck.js";
-import { displayPages } from "./app-ui.js";
+import { displayPage } from "./app-ui.js";
 
 function setupGeneratorUI() {
     const input = document.getElementById("input-topic");
@@ -18,9 +18,15 @@ function setupGeneratorUI() {
     input.addEventListener("input", updateGenerateButton);
 
     button.addEventListener("click", async () => {
-        displayPages(["generator", "loading"]);
-        await generateAndDrawDeck();
-        displayPages(["deck"]);
+        const throbber = document.getElementById("generator-throbber");
+        throbber.style.display = "flex";
+        try {
+            await generateAndDrawDeck();
+        } catch (error) {
+            // ??
+        }
+        throbber.style.display = "none";
+        displayPage("deck");
     });
 
     updateGenerateButton();

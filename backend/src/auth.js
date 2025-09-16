@@ -11,12 +11,13 @@ function generateToken(userId, startTime, expireTime) {
     const payloadStr = JSON.stringify(payload);
     const payloadBase64 = Buffer.from(payloadStr).toString("base64");
 
-    return payloadBase64;
+    const tokenBuf = Buffer.from(payloadBase64);
+    return tokenBuf.toString("base64");
 }
 
 function verifyToken(token) {
     const tokenBuf = Buffer.from(token, "base64");
-
+    
     const payloadBase64 = tokenBuf.toString();
     const payloadStr = Buffer.from(payloadBase64, "base64").toString();
 

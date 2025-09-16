@@ -3,7 +3,7 @@
 import { FRONTEND_URL } from "../config.js";
 import { cancelEditedDeck, currentDeck, loadAndDrawDeck, modifyAndDrawDeck, saveEditedDeck, toggleModeAndDrawDeck } from "../deck.js";
 import { svgTrash } from "../icons.js";
-import { displayPages } from "./app-ui.js";
+import { displayPage } from "./app-ui.js";
 
 /* ---------- Helpers ---------- */
 function makeEl(tag, classes = [], text = "", props = {}) {
@@ -27,12 +27,14 @@ const flashcardContainer = document.getElementById("flashcards-container");
 const editContainer = document.getElementById("deck-edit-toggle-container");
 const saveContainer = document.getElementById("deck-save-cancel-container");
 const promptContainer = document.getElementById("deck-edit-prompt-container");
+const promptThrobber = document.getElementById("deck-edit-prompt-throbber");
 
 /* ---------- Read Mode ---------- */
 function drawDeckReadMode(deck = null) {
     editContainer.style.display = "flex";
     saveContainer.style.display = "none";
     promptContainer.style.display = "none";
+    promptThrobber.style.display = "none";
 
     const titleEl = document.getElementById("deck-title");
     const authorEl = document.getElementById("deck-author");
@@ -109,6 +111,7 @@ function drawDeckEditMode(deck) {
     editContainer.style.display = "none";
     saveContainer.style.display = "flex";
     promptContainer.style.display = "flex";
+    promptThrobber.style.display = "none";
     clearEl(flashcardContainer);
 
     const addBtn = makeEl("button", ["btn-add-flashcard"]);
@@ -138,7 +141,7 @@ function drawDeckEditMode(deck) {
 async function tryDrawSharedDeck() {
     const id = new URLSearchParams(window.location.search).get("deck_id");
     if (id) {
-        displayPages(["deck"]);
+        displayPage("deck");
         await loadAndDrawDeck(id);
     }
 }
@@ -173,9 +176,9 @@ function setupViewModeUI() {
     function resetFlip() {
         const prevTransition = cardInner.style.transition;
 
-        cardInner.style.transition = "none";
-        cardInner.offsetHeight;
+        cardInner.style.transition = "transform 160ms ease";
         cardInner.classList.remove(flippedClass);
+        void cardInner.offsetHeight;
 
         requestAnimationFrame(() => {
             cardInner.style.transition = prevTransition;
@@ -186,7 +189,7 @@ function setupViewModeUI() {
         currentCardIndex = 0;
         bagIndex = 0;
         randomBag = randomizeBag();
-        displayPages(["view"]);
+        displayPage("view");
         drawFlashcardViewMode();
     };
 
@@ -220,16 +223,28 @@ function setupViewModeUI() {
 
     document.getElementById("btn-view-exit").onclick = () => {
         resetFlip();
-        displayPages(["deck"]);
+        displayPage("deck");
     };
 }
 
 /* ---------- Deck Controls ---------- */
 function setupDeckUI() {
     document.getElementById("btn-edit-deck").onclick = toggleModeAndDrawDeck;
-    document.getElementById("btn-edit-prompt-submit").onclick = modifyAndDrawDeck;
     document.getElementById("btn-edit-mode-save").onclick = saveEditedDeck;
     document.getElementById("btn-edit-mode-cancel").onclick = cancelEditedDeck;
+
+    document.getElementById("btn-edit-prompt-submit").onclick = async () => {
+        promptContainer.style.display = "none";
+        promptThrobber.style.display = "block";
+        try {
+            await modifyAndDrawDeck();
+        } catch (error) {
+            // ??
+        }
+        promptContainer.style.display = "flex";
+        promptThrobber.style.display = "none";
+    };
+
     document.getElementById("btn-share-deck").onclick = () => {
         const url = `${FRONTEND_URL}/?deck_id=${currentDeck._id}`;
         navigator.clipboard.writeText(url);

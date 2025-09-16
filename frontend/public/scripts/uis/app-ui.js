@@ -33,34 +33,28 @@ document.querySelectorAll('.input-number-group').forEach(group => {
 });
 
 
-function displayPages(pages) {
+function displayPage(page) {
     const generatorPage = document.getElementById("generator-container");
-    const loadingPage = document.getElementById("loading-container");
     const deckPage = document.getElementById("deck-container");
     const viewPage = document.getElementById("view-container");
     const userPage = document.getElementById("user-container");
 
     generatorPage.style.display = "none";
-    loadingPage.style.display = "none";
     deckPage.style.display = "none";
     viewPage.style.display = "none";
     userPage.style.display = "none";
 
-    pages.forEach((page) => {
-        if (page === "generator") {
-            generatorPage.style.display = "flex";
-        } else if (page === "loading") {
-            loadingPage.style.display = "flex";
-        } else if (page === "deck") {
-            deckPage.style.display = "flex";
-        } else if (page === "view") {
-            viewPage.style.display = "flex";
-        } else if (page === "user") {
-            userPage.style.display = "flex";
-        }
-    });
+    if (page === "generator") {
+        generatorPage.style.display = "flex";
+    } else if (page === "deck") {
+        deckPage.style.display = "flex";
+    } else if (page === "view") {
+        viewPage.style.display = "flex";
+    } else if (page === "user") {
+        userPage.style.display = "flex";
+    }
 
     window.scrollTo(0, 0);
 }
 
-export { displayPages }
+export { displayPage }
