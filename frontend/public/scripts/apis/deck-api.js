@@ -163,7 +163,7 @@ async function deleteDeckById(id) {
         }
 
         const result = await res.json();
-        console.log("Deck deleted:", result.message);
+        // console.log("Deck deleted:", result.message);
         return true;
 
     } catch (error) {

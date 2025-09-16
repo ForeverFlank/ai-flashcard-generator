@@ -5,19 +5,42 @@ import { displayPage } from "./app-ui.js";
 import { drawLatestDecksTable } from "./explore-ui.js";
 import { drawUserPage } from "./user-ui.js";
 
+const mobileExplore = document.getElementById("btn-mobile-explore");
+const mobileLogin = document.getElementById("btn-mobile-log-in");
+const mobileSignup = document.getElementById("btn-mobile-sign-up");
+const mobileNewDeck = document.getElementById("btn-mobile-new-deck");
+const mobileMyDecks = document.getElementById("btn-mobile-my-decks");
+const mobileSignOut = document.getElementById("btn-mobile-sign-out"); // fixed typo
+
 function updateTopRightUI() {
     const notLoggedInBar = document.getElementById("header-user-not-logged-in");
     const loggedInBar = document.getElementById("header-user-logged-in");
 
-    if (loggedInUser) {
-        notLoggedInBar.style.display = "none";
-        loggedInBar.style.display = "block";
-        document.getElementById("user-menu-username").innerText = loggedInUser.name;
-    } else {
+    mobileExplore.style.display = "block";
+
+    if (!loggedInUser) {
         notLoggedInBar.style.display = "block";
         loggedInBar.style.display = "none";
+
+        mobileLogin.style.display = "block";
+        mobileSignup.style.display = "block";
+        mobileNewDeck.style.display = "none";
+        mobileMyDecks.style.display = "none";
+        mobileSignOut.style.display = "none";
+    } else {
+        notLoggedInBar.style.display = "none";
+        loggedInBar.style.display = "block";
+
+        document.getElementById("user-menu-username").innerText = loggedInUser.name;
+
+        mobileLogin.style.display = "none";
+        mobileSignup.style.display = "none";
+        mobileNewDeck.style.display = "block";
+        mobileMyDecks.style.display = "block";
+        mobileSignOut.style.display = "block";
     }
 }
+
 
 function setupTopUI() {
     const userMenu = document.getElementById("header-user-menu");
@@ -95,10 +118,21 @@ function setupTopUI() {
         updateTopRightUI();
         userMenu.style.display = "none";
     });
+    document.getElementById("btn-mobile-sign-out").addEventListener("click", () => {
+        signOut();
+        updateTopRightUI();
+        userMenu.style.display = "none";
+        closeMobileMenu();
+    });
 
     document.getElementById("btn-new-deck").addEventListener("click", () => {
         displayPage("generator");
         userMenu.style.display = "none";
+    });
+    document.getElementById("btn-mobile-new-deck").addEventListener("click", () => {
+        displayPage("generator");
+        userMenu.style.display = "none";
+        closeMobileMenu();
     });
 
     document.getElementById("btn-my-decks").addEventListener("click", async () => {
@@ -107,12 +141,15 @@ function setupTopUI() {
         drawUserPage(loggedInUser.name);
         userMenu.style.display = "none";
     });
+    document.getElementById("btn-mobile-my-decks").addEventListener("click", async () => {
+        if (!loggedInUser) return;
+        displayPage("user");
+        drawUserPage(loggedInUser.name);
+        userMenu.style.display = "none";
+        closeMobileMenu();
+    });
 
 
-
-    const mobileExplore = document.getElementById("btn-mobile-explore");
-    const mobileLogin = document.getElementById("btn-mobile-log-in");
-    const mobileSignup = document.getElementById("btn-mobile-sign-up");
 
     hamburger.addEventListener("click", () => {
         if (mobileMenu.style.display === "flex") {
