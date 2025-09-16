@@ -102,7 +102,7 @@ button:hover {
 }
 
 .top-bar-user-not-logged-in button {
-    padding: 0.25rem 1rem;
+    padding: 0.5rem 1.25rem;
     margin-left: 0.5rem;
 }
 
@@ -132,7 +132,7 @@ button:hover {
     align-items: center;
     text-align: center;
     position: absolute;
-    background-color: #10131b;
+    background-color: var(--bg);
     border: 1px solid var(--dark-20);
     padding: 0.5rem 1rem;
     min-width: 8rem;
@@ -438,7 +438,7 @@ button:hover {
 .deck-container-inner {
     border-top: 1px solid var(--dark-20);
     border-bottom: 1px solid var(--dark-20);
-    background-color: #181b22;
+    background-color: var(--dark-10);
     width: 100%;
     padding: 2rem 0;
     margin-top: 2rem;
