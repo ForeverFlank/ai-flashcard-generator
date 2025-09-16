@@ -39,6 +39,38 @@ async function generateDeck() {
     }
 }
 
+async function modifyDeck(deck) {
+    try {
+        const prompt = document.getElementById("input-modify-prompt").value.trim();
+        const flashcards = deck.flashcards;
+
+        const requestBody = {
+            prompt,
+            flashcards
+        };
+
+        const res = await fetch(`${BACKEND_URL}/flashcards/generate-deck`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(requestBody),
+        });
+
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.error || "Failed to generate deck");
+        }
+
+        const data = await res.json();
+        return data;
+    } catch (error) {
+        console.error("Modify deck error: ", error.message);
+    }
+}
+
+
+
 async function uploadDeck(deck) {
     try {
         const token = localStorage.getItem("authToken");
@@ -136,4 +168,4 @@ async function deleteDeckById(id) {
 }
 
 
-export { generateDeck, uploadDeck, getDeckById, getDecksByUsername, deleteDeckById }
+export { generateDeck, modifyDeck, uploadDeck, getDeckById, getDecksByUsername, deleteDeckById }

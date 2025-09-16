@@ -65,9 +65,28 @@ async function authMiddleware(req, res, next) {
     req.user = user;
     next();
 }
+async function optionalAuthMiddleware(req, res, next) {
+    req.user = null;
+
+    const authHeader = req.headers.authorization;
+    if (!authHeader) return next();
+
+    const token = authHeader.split(" ")[1];
+    const tokenData = verifyToken(token);
+    if (!tokenData) return next();
+
+    try {
+        const user = await User.findById(tokenData.userId);
+        if (user) req.user = user;
+    } catch (err) {
+        // swallow errors, leave req.user = null
+    }
+
+    next();
+}
 
 async function checkAuth(req, res) {
     res.status(200).json({ id: req.user._id, name: req.user.name });
 }
 
-export { generateToken, authMiddleware, checkAuth }
+export { generateToken, authMiddleware, optionalAuthMiddleware, checkAuth }

@@ -1,6 +1,6 @@
 "use strict";
 
-import { generateDeck, getDeckById, uploadDeck } from "./apis/deck-api.js";
+import { generateDeck, getDeckById, modifyDeck, uploadDeck } from "./apis/deck-api.js";
 import { drawDeckReadMode, drawDeckEditMode } from "./uis/deck-ui.js";
 
 let currentDeck = null;
@@ -28,6 +28,22 @@ function toggleModeAndDrawDeck() {
         currentMode = "read";
         drawDeckReadMode(currentDeck);
     }
+}
+
+async function modifyAndDrawDeck() {
+    const flashcards = (await modifyDeck(currentDeck)).flashcards;
+
+    currentDeck.flashcards.forEach((card) => {
+        card.toBeDeleted = true;
+    });
+    flashcards.forEach((card) => {
+        currentDeck.flashcards.push({
+            qEdited: card.q,
+            aEdited: card.a,
+            recentlyCreated: true
+        })
+    });
+    drawDeckEditMode(currentDeck);
 }
 
 /* ---------- Save / Cancel ---------- */
@@ -58,4 +74,12 @@ function cancelEditedDeck() {
     drawDeckReadMode(currentDeck);
 }
 
-export { currentDeck, currentMode, generateAndDrawDeck, loadAndDrawDeck, toggleModeAndDrawDeck, saveEditedDeck, cancelEditedDeck };
+export {
+    currentDeck, currentMode,
+    generateAndDrawDeck,
+    modifyAndDrawDeck,
+    loadAndDrawDeck,
+    toggleModeAndDrawDeck,
+    saveEditedDeck,
+    cancelEditedDeck
+};

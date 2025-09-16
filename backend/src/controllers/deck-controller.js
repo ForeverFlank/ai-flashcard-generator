@@ -1,7 +1,7 @@
 "use strict";
 
 import Deck from "../models/deck-model.js";
-import { generateDeckJSONFromLLM } from "../llm.js";
+import { generateDeckJSONFromLLM, modifyDeckJSONFromLLM } from "../llm.js";
 import { User } from "../models/user-model.js";
 
 async function generateDeck(req, res) {
@@ -25,21 +25,48 @@ async function generateDeck(req, res) {
             flashcards = JSON.parse(deckJson);
         } catch (error) {
             console.error("Failed to parse deck JSON from LLM:", error);
-            return res.status(400).json({ error: "Invalid deck format returned from LLM" });
+            return res.status(400).json({ error: "LLM generated data is not a valid JSON" });
         }
-
+        
         const newDeck = await Deck.create({
             user,
             name: name || topic,
             topic,
             flashcards,
         });
-
+        
         const response = newDeck.toObject();
         response.author = user?.name || "Anonymous";
         delete response.user;
-
+        
         return res.status(201).json({ deck: response });
+    } catch (error) {
+        console.error("Error generating deck:", error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
+async function modifyDeck(req, res) {
+    try {
+        const { prompt, flashcards } = req.body;
+        
+        if (!prompt || !flashcards) {
+            return res.status(400).json({ error: "Missing required fields" });
+        }
+        
+        const modifiedFlashcards = await modifyDeckJSONFromLLM({
+            prompt,
+            flashcards
+        });
+        
+        try {
+            JSON.parse(modifiedFlashcards);
+        } catch (error) {
+            console.error("Failed to parse deck JSON from LLM:", error);
+            return res.status(400).json({ error: "LLM generated data is not a valid JSON" });
+        }
+
+        return res.status(201).json({ flashcards: modifiedFlashcards });
     } catch (error) {
         console.error("Error generating deck:", error);
         return res.status(500).json({ error: "Internal Server Error" });
@@ -155,6 +182,7 @@ async function deleteDeckById(req, res) {
 
 export {
     generateDeck,
+    modifyDeck,
     storeDeck,
     getDecksByUsername,
     getDeckById,

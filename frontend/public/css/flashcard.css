@@ -7,8 +7,8 @@
     width: 80%;
     max-width: 1000px;
     margin: 2rem auto;
-    max-height: 80vh;
-    overflow-y: auto;
+    /* max-height: 80vh; */
+    /* overflow-y: auto; */
     padding: 1rem;
     box-sizing: border-box;
 }
