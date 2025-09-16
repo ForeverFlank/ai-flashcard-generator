@@ -10,7 +10,7 @@ router.post("/signup", signupUser);
 router.post("/login", loginUser);
 router.get("/check-auth", authMiddleware, checkAuth);
 
-router.post("/flashcards/generate-deck", authMiddleware, generateDeck);
+router.post("/flashcards/generate-deck", generateDeck);
 router.post("/flashcards/upload-deck", authMiddleware, storeDeck);
 
 router.get("/users/:name/decks", getDecksByUsername);

@@ -1,6 +1,6 @@
 "use strict";
 
-import { BACKEND_URL, FRONTEND_URL } from "../config.js";
+import { FRONTEND_URL } from "../config.js";
 import { cancelEditedDeck, currentDeck, loadAndDrawDeck, saveEditedDeck, toggleModeAndDrawDeck } from "../deck.js";
 import { svgTrash } from "../icons.js";
 import { displayPages } from "./app-ui.js";
@@ -173,6 +173,91 @@ async function tryDrawSharedDeck() {
     }
 }
 
+let currentCardIndex = 0;
+let randomBag = [];
+let currentBagIndex = 0;
+
+function randomizeBag() {
+    const n = currentDeck.flashcards.length;
+    const res = [];
+    for (let i = 0; i < n; i++) {
+        res.push(i);
+    }
+
+    let i = n;
+    while (i != 0) {
+        let j = Math.floor(Math.random() * i);
+        i--;
+        [res[i], res[j]] = [res[j], res[i]];
+    }
+
+    return res;
+}
+
+function drawFlashcardViewMode() {
+    const card = currentDeck.flashcards[currentCardIndex];
+
+    const leftBorder = document.getElementById("view-card-border");
+    const questionElement = document.getElementById("view-card-question");
+    const answerElement = document.getElementById("view-card-answer");
+
+    leftBorder.style.backgroundColor = getCardColor(card.q);
+    questionElement.innerText = card.q;
+    answerElement.innerText = card.a;
+}
+
+function setupViewModeUI() {
+    document.getElementById("btn-view-deck").addEventListener("click", () => {
+        currentCardIndex = 0;
+        currentBagIndex = 0;
+        randomBag = randomizeBag();
+
+        displayPages(["view"]);
+        drawFlashcardViewMode();
+    });
+
+    const cardInner = document.getElementById("view-card-inner");
+    const classList = cardInner.classList;
+    const flipped = "flashcard-flipped";
+    cardInner.addEventListener("click", () => {
+        if (!classList.contains(flipped)) {
+            classList.add(flipped);
+        } else {
+            classList.remove(flipped);
+        }
+    });
+
+    document.getElementById("btn-view-prev").addEventListener("click", () => {
+        classList.remove(flipped);
+        currentCardIndex--;
+        if (currentCardIndex < 0) {
+            currentCardIndex = currentDeck.flashcards.length - 1;
+        }
+        drawFlashcardViewMode();
+    });
+    document.getElementById("btn-view-rand").addEventListener("click", () => {
+        classList.remove(flipped);
+        currentCardIndex = randomBag[currentBagIndex++];
+        if (currentBagIndex >= randomBag.length) {
+            currentBagIndex = 0;
+            randomBag = randomizeBag();
+        }
+        drawFlashcardViewMode();
+    });
+    document.getElementById("btn-view-next").addEventListener("click", () => {
+        classList.remove(flipped);
+        currentCardIndex++;
+        if (currentCardIndex >= currentDeck.flashcards.length) {
+            currentCardIndex = 0;
+        }
+        drawFlashcardViewMode();
+    });
+
+    document.getElementById("btn-view-exit").addEventListener("click", () => {
+        displayPages(["deck"]);
+    });
+}
+
 function setupDeckUI() {
     document.getElementById("btn-edit-deck").addEventListener("click", toggleModeAndDrawDeck);
 
@@ -186,4 +271,4 @@ function setupDeckUI() {
     });
 }
 
-export { drawDeckReadMode, drawDeckEditMode, tryDrawSharedDeck, setupDeckUI }
+export { drawDeckReadMode, drawDeckEditMode, tryDrawSharedDeck, setupViewModeUI, setupDeckUI }

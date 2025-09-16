@@ -17,7 +17,7 @@
   <header>
     <div class="top-bar-container">
       <div>
-        <p>FlashGen</p>
+        <a href=".">FlashGen</a>
       </div>
       <div>
         <div id="header-user-not-logged-in" class="top-bar-user-not-logged-in" style="display: none;">
@@ -86,8 +86,23 @@
             <label>Length</label>
             <div class="input-number-group">
               <button type="button" class="input-number-minus">&minus;</button>
-              <input id="input-card-count" type="number" min="1" max="20" value="10" />
+              <input id="input-card-count" type="number" min="3" max="20" value="10" />
               <button type="button" class="input-number-plus">&plus;</button>
+            </div>
+          </div>
+
+          <div>
+            <label>Mode</label>
+            <div class="pill-group" role="radio" aria-label="Mode">
+              <label class="pill">
+                <input type="radio" name="mode" value="keywords" checked>
+                <span>Keywords</span>
+              </label>
+
+              <label class="pill">
+                <input type="radio" name="mode" value="qna">
+                <span>Q&amp;A</span>
+              </label>
             </div>
           </div>
 
@@ -107,21 +122,6 @@
               <label class="pill pill-red">
                 <input type="radio" name="difficulty" value="long">
                 <span>Hard</span>
-              </label>
-            </div>
-          </div>
-
-          <div>
-            <label>Mode</label>
-            <div class="pill-group" role="radio" aria-label="Mode">
-              <label class="pill">
-                <input type="radio" name="mode" value="keywords" checked>
-                <span>Keywords</span>
-              </label>
-
-              <label class="pill">
-                <input type="radio" name="mode" value="qna">
-                <span>Q&amp;A</span>
               </label>
             </div>
           </div>
@@ -145,18 +145,65 @@
           <h3 id="deck-author">By Username</h3>
         </div>
         <div id="deck-edit-toggle-container" style="display: block;">
-          <button id="btn-share-deck" class="btn-blue">Share</button>
-          <button id="btn-edit-deck">Edit</button>
+          <button id="btn-view-deck">View</button>
+          <div>
+            <button id="btn-edit-deck">Edit</button>
+            <button id="btn-share-deck" class="btn-blue">Share</button>
+          </div>
         </div>
         <div id="deck-save-cancel-container" style="display: none;">
-          <button id="btn-edit-mode-save">Save</button>
-          <button id="btn-edit-mode-cancel" class="btn-red">Cancel</button>
+          <div>
+            <button id="btn-edit-mode-cancel" class="btn-red">Cancel</button>
+            <button id="btn-edit-mode-save">Save</button>
+          </div>
         </div>
       </div>
 
       <div class="deck-container-inner">
         <div id="flashcards-container" class="flashcards-container">
         </div>
+      </div>
+    </div>
+
+    <div id="view-container" class="view-container" style="display: none;">
+      <div>
+        <button id="btn-view-exit" class="btn-red">Exit</button>
+      </div>
+      <div id="view-card-container" class="view-card-container">
+        <div class="flashcard-large">
+          <div id="view-card-inner" class="flashcard-inner">
+            <div class="flashcard-front">
+              <div id="view-card-border" class="flashcard-large-left-border"></div>
+              <p id="view-card-question"></p>
+            </div>
+            <div class="flashcard-back">
+              <p id="view-card-answer"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="view-buttons-container">
+        <div>
+          <button id="btn-view-prev">◀</button>
+          <button id="btn-view-rand">🎲</button>
+          <button id="btn-view-next">▶</button>
+        </div>
+        <!-- <div class="pill-group" role="radio" aria-label="Card difficulty">
+          <label class="pill pill-red">
+            <input type="radio" name="card-diff" value="again">
+            <span>Again</span>
+          </label>
+
+          <label class="pill pill-yellow">
+            <input type="radio" name="card-diff" value="hard" checked>
+            <span>Hard</span>
+          </label>
+
+          <label class="pill pill-blue">
+            <input type="radio" name="card-diff" value="easy">
+            <span>Easy</span>
+          </label>
+        </div> -->
       </div>
     </div>
 
@@ -169,6 +216,8 @@
         </tbody>
       </table>
     </div>
+
+    <div style="height: 2vh;"></div>
   </main>
 
   <footer></footer>

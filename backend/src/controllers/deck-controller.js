@@ -9,7 +9,7 @@ async function generateDeck(req, res) {
         const { topic, count, difficulty, mode, name } = req.body;
         const user = req.user;
 
-        if (!user || !topic || !count || !difficulty || !mode) {
+        if (!topic || !count || !difficulty || !mode) {
             return res.status(400).json({ error: "Missing required fields" });
         }
 
@@ -36,7 +36,7 @@ async function generateDeck(req, res) {
         });
 
         const response = newDeck.toObject();
-        response.author = user.name;
+        response.author = user?.name || "Anonymous";
         delete response.user;
 
         return res.status(201).json({ deck: response });
@@ -126,7 +126,7 @@ async function getDeckById(req, res) {
         }
 
         const response = deck.toObject();
-        response.author = deck.user?.name || "Unknown";
+        response.author = deck.user?.name || "Anonymous";
         delete response.user;
 
         return res.status(200).json({ deck: response });
