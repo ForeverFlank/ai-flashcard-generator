@@ -49,18 +49,18 @@ async function generateDeck(req, res) {
 async function modifyDeck(req, res) {
     try {
         const { prompt, flashcards } = req.body;
-        
+
         if (!prompt || !flashcards) {
             return res.status(400).json({ error: "Missing required fields" });
         }
         
-        const modifiedFlashcards = await modifyDeckJSONFromLLM({
+        let modifiedFlashcards = await modifyDeckJSONFromLLM({
             prompt,
             flashcards
         });
         
         try {
-            JSON.parse(modifiedFlashcards);
+            modifiedFlashcards = JSON.parse(modifiedFlashcards);
         } catch (error) {
             console.error("Failed to parse deck JSON from LLM:", error);
             return res.status(400).json({ error: "LLM generated data is not a valid JSON" });

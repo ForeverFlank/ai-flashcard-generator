@@ -11,7 +11,7 @@ router.post("/login", loginUser);
 router.get("/check-auth", authMiddleware, checkAuth);
 
 router.post("/flashcards/generate-deck", optionalAuthMiddleware, generateDeck);
-router.get("/flashcards/modify-deck", modifyDeck);
+router.post("/flashcards/modify-deck", modifyDeck);
 router.post("/flashcards/upload-deck", authMiddleware, storeDeck);
 
 router.get("/users/:name/decks", getDecksByUsername);

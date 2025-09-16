@@ -41,16 +41,21 @@ async function generateDeck() {
 
 async function modifyDeck(deck) {
     try {
-        const prompt = document.getElementById("input-modify-prompt").value.trim();
-        const flashcards = deck.flashcards;
+        const prompt = document.getElementById("input-edit-prompt").value.trim();
+        const flashcards = deck.flashcards.map((card) => {
+            return {
+                q: card.qEdited || card.q,
+                a: card.aEdited || card.a
+            }
+        });
 
         const requestBody = {
             prompt,
             flashcards
         };
 
-        const res = await fetch(`${BACKEND_URL}/flashcards/generate-deck`, {
-            method: "GET",
+        const res = await fetch(`${BACKEND_URL}/flashcards/modify-deck`, {
+            method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },

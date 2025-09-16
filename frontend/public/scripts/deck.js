@@ -38,6 +38,8 @@ async function modifyAndDrawDeck() {
     });
     flashcards.forEach((card) => {
         currentDeck.flashcards.push({
+            q: card.q,
+            a: card.a,
             qEdited: card.q,
             aEdited: card.a,
             recentlyCreated: true

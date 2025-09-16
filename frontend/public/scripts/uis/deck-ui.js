@@ -1,7 +1,7 @@
 "use strict";
 
 import { FRONTEND_URL } from "../config.js";
-import { cancelEditedDeck, currentDeck, loadAndDrawDeck, saveEditedDeck, toggleModeAndDrawDeck } from "../deck.js";
+import { cancelEditedDeck, currentDeck, loadAndDrawDeck, modifyAndDrawDeck, saveEditedDeck, toggleModeAndDrawDeck } from "../deck.js";
 import { svgTrash } from "../icons.js";
 import { displayPages } from "./app-ui.js";
 
@@ -26,11 +26,13 @@ function getCardColor(n) {
 const flashcardContainer = document.getElementById("flashcards-container");
 const editContainer = document.getElementById("deck-edit-toggle-container");
 const saveContainer = document.getElementById("deck-save-cancel-container");
+const promptContainer = document.getElementById("deck-edit-prompt-container");
 
 /* ---------- Read Mode ---------- */
 function drawDeckReadMode(deck = null) {
     editContainer.style.display = "flex";
     saveContainer.style.display = "none";
+    promptContainer.style.display = "none";
 
     const titleEl = document.getElementById("deck-title");
     const authorEl = document.getElementById("deck-author");
@@ -106,18 +108,30 @@ function drawFlashcardEditMode(card, addButton) {
 function drawDeckEditMode(deck) {
     editContainer.style.display = "none";
     saveContainer.style.display = "flex";
+    promptContainer.style.display = "flex";
     clearEl(flashcardContainer);
 
     const addBtn = makeEl("button", ["btn-add-flashcard"]);
     addBtn.innerHTML = "<span>+</span> Add Flashcard";
     addBtn.onclick = () => {
-        const newCard = { q: "", a: "", qEdited: "", aEdited: "", recentlyCreated: true, toBeDeleted: false };
+        const newCard = {
+            q: "",
+            a: "",
+            qEdited: "",
+            aEdited: "",
+            recentlyCreated: true,
+            toBeDeleted: false
+        };
         deck.flashcards.push(newCard);
         drawFlashcardEditMode(newCard, addBtn);
     };
 
     flashcardContainer.appendChild(addBtn);
-    deck.flashcards.forEach((card) => drawFlashcardEditMode(card, addBtn));
+    deck.flashcards.forEach((card) => {
+        if (!card.toBeDeleted) {
+            drawFlashcardEditMode(card, addBtn);
+        }
+    });
 }
 
 /* ---------- Shared Deck ---------- */
@@ -160,7 +174,7 @@ function setupViewModeUI() {
         const prevTransition = cardInner.style.transition;
 
         cardInner.style.transition = "none";
-        cardInner.offsetHeight; 
+        cardInner.offsetHeight;
         cardInner.classList.remove(flippedClass);
 
         requestAnimationFrame(() => {
@@ -213,6 +227,7 @@ function setupViewModeUI() {
 /* ---------- Deck Controls ---------- */
 function setupDeckUI() {
     document.getElementById("btn-edit-deck").onclick = toggleModeAndDrawDeck;
+    document.getElementById("btn-edit-prompt-submit").onclick = modifyAndDrawDeck;
     document.getElementById("btn-edit-mode-save").onclick = saveEditedDeck;
     document.getElementById("btn-edit-mode-cancel").onclick = cancelEditedDeck;
     document.getElementById("btn-share-deck").onclick = () => {

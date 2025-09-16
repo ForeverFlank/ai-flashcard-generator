@@ -41,6 +41,7 @@ export async function generateDeckJSONFromLLM(data) {
 
 export async function modifyDeckJSONFromLLM(data) {
     const { prompt, flashcards } = data;
+    const flashcardsJson = JSON.stringify(flashcards);
 
     const chat = ai.chats.create({
         model: "gemini-2.0-flash",
@@ -56,7 +57,7 @@ export async function modifyDeckJSONFromLLM(data) {
         message: `
             Edit the existing flashcards.
             Prompt: ${prompt}
-            Data: ${flashcards}
+            Data: ${flashcardsJson}
         `.trim(),
     });
 
