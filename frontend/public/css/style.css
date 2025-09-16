@@ -447,10 +447,12 @@ button:hover {
 /* View */
 
 .view-container {
-    margin-top: -4.5rem;
+    margin-top: -2rem;
     padding-top: 2rem;
     padding-bottom: 1rem;
     background-color: var(--dark-10);
+    border-top: 1px solid var(--dark-20);
+    border-bottom: 1px solid var(--dark-20);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -486,6 +488,15 @@ button:hover {
 
 .view-buttons-container span {
     margin: 0 auto;
+}
+
+.view-container-top {
+    width: 80%;
+    align-self: center;
+}
+
+.view-container-top button {
+    padding: 0.5rem 1rem;
 }
 
 /* User */

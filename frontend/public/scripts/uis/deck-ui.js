@@ -233,6 +233,8 @@ function setupViewModeUI() {
         if (currentCardIndex < 0) {
             currentCardIndex = currentDeck.flashcards.length - 1;
         }
+        currentBagIndex = 0;
+        randomBag = randomizeBag();
         drawFlashcardViewMode();
     });
     document.getElementById("btn-view-rand").addEventListener("click", () => {
@@ -250,10 +252,13 @@ function setupViewModeUI() {
         if (currentCardIndex >= currentDeck.flashcards.length) {
             currentCardIndex = 0;
         }
+        currentBagIndex = 0;
+        randomBag = randomizeBag();
         drawFlashcardViewMode();
     });
 
     document.getElementById("btn-view-exit").addEventListener("click", () => {
+        classList.remove(flipped);
         displayPages(["deck"]);
     });
 }
