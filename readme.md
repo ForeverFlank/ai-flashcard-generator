@@ -6,7 +6,6 @@ Final project วิชา i2cedt กลุ่ม 19 ตึงๆ
 ```
 GEMINI_API_KEY=...
 MONGO_URI=...
-AUTH_TOKEN_KEY=CEDTcriossant019
 ```
 ข้างในไฟล์ แล้วก็แก้ `IP` ใน `start.sh` เป็น IPv4 ของ ec2 (หรือปล่อยไว้เป็น localhost นั้นถ้าจะรันบน local) จากนั้นรัน `./start.sh` ได้เลย
 
