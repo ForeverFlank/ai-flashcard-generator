@@ -28,6 +28,9 @@ function setupTopUI() {
     const loginFailedText = document.getElementById("log-in-failed");
     const userButton = document.getElementById("btn-user");
 
+    const mobileMenu = document.getElementById("header-mobile-menu");
+    const hamburger = document.getElementById("btn-mobile-nav");
+
     function showMenuSection(section) {
         const isVisible = userMenu.style.display === "flex";
         const isSameSectionVisible = section.style.display === "block";
@@ -49,7 +52,7 @@ function setupTopUI() {
     }
 
     userButton.addEventListener("click", () => {
-        showMenuSection(loggedInMenu)
+        showMenuSection(loggedInMenu);
     });
 
     document.getElementById("btn-explore").addEventListener("click", () => {
@@ -59,7 +62,6 @@ function setupTopUI() {
     });
 
     document.getElementById("btn-sign-up").addEventListener("click", () => showMenuSection(signupMenu));
-
     document.getElementById("btn-log-in").addEventListener("click", () => showMenuSection(loginMenu));
 
     document.getElementById("btn-sign-up-submit").addEventListener("click", async () => {
@@ -105,6 +107,51 @@ function setupTopUI() {
         drawUserPage(loggedInUser.name);
         userMenu.style.display = "none";
     });
+
+
+
+    const mobileExplore = document.getElementById("btn-mobile-explore");
+    const mobileLogin = document.getElementById("btn-mobile-log-in");
+    const mobileSignup = document.getElementById("btn-mobile-sign-up");
+
+    hamburger.addEventListener("click", () => {
+        if (mobileMenu.style.display === "flex") {
+            mobileMenu.style.display = "none";
+        } else {
+            mobileMenu.style.display = "flex";
+        }
+    });
+
+    function closeMobileMenu() {
+        mobileMenu.style.display = "none";
+    }
+
+    mobileExplore.addEventListener("click", () => {
+        displayPage("explore");
+        document.getElementById("input-page-num").value = 1;
+        drawLatestDecksTable(1);
+        closeMobileMenu();
+    });
+
+    mobileLogin.addEventListener("click", () => {
+        showMenuSection(loginMenu);
+        closeMobileMenu();
+    });
+
+    mobileSignup.addEventListener("click", () => {
+        showMenuSection(signupMenu);
+        closeMobileMenu();
+    });
+
+    document.addEventListener("click", (e) => {
+        const target = e.target;
+
+        if (!mobileMenu.contains(target) && !hamburger.contains(target)) {
+            closeMobileMenu();
+        }
+    });
+
 }
+
 
 export { setupTopUI, updateTopRightUI }

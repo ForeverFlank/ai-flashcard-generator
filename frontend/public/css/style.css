@@ -76,6 +76,28 @@ button:hover {
     font-size: 36px;
 }
 
+.pc-inline {
+    display: inline;
+}
+
+.pc-flex {
+    display: flex;
+}
+
+.mobile {
+    display: none;
+}
+
+@media (max-width: 480px) {
+    .pc-inline, .pc-flex {
+        display: none;
+    }
+    
+    .mobile {
+        display: flex;
+    }
+}
+
 /* Top bar */
 
 .top-bar-container {
@@ -173,6 +195,18 @@ button:hover {
 .btn-sign-out:hover {
     background-color: lch(25 25 30);
     border: 1px solid lch(60 60 30);
+}
+
+.mobile-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    row-gap: 0.5rem;
+}
+
+.mobile-menu button {
+    width: 8rem;
+    padding: 0.5rem;
 }
 
 /* Generator */

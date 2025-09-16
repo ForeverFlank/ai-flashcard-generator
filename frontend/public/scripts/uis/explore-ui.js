@@ -18,7 +18,7 @@ async function drawLatestDecksTable(pageNum) {
 
         const title = document.createElement("td");
         title.innerText = deck.name || "(Untitled Deck)";
-        title.style.width = "60%";
+        // title.style.width = "60%";
 
         const author = document.createElement("td");
         author.innerText = deck.author || "Anonymous";
@@ -30,7 +30,7 @@ async function drawLatestDecksTable(pageNum) {
             displayPage("deck");
             loadAndDrawDeck(deck._id);
         });
-        view.style.width = "1%";
+        // view.style.width = "1%";
         view.appendChild(viewBtn);
 
         tr.appendChild(title);
