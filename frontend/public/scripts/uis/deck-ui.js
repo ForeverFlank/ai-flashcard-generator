@@ -36,6 +36,9 @@ function drawDeckReadMode(deck = null) {
     promptContainer.style.display = "none";
     promptThrobber.style.display = "none";
 
+    document.getElementById("deck-share-url").style.display = "none";
+    document.getElementById("deck-share-url").value = "";
+
     const titleEl = document.getElementById("deck-title");
     const authorEl = document.getElementById("deck-author");
 
@@ -112,6 +115,10 @@ function drawDeckEditMode(deck) {
     saveContainer.style.display = "flex";
     promptContainer.style.display = "flex";
     promptThrobber.style.display = "none";
+
+    document.getElementById("deck-share-url").style.display = "none";
+    document.getElementById("deck-share-url").value = "";
+
     clearEl(flashcardContainer);
 
     const addBtn = makeEl("button", ["btn-add-flashcard"]);
@@ -163,6 +170,9 @@ function randomizeBag() {
 }
 
 function drawFlashcardViewMode() {
+    document.getElementById("deck-share-url").style.display = "none";
+    document.getElementById("deck-share-url").value = "";
+
     const card = currentDeck.flashcards[currentCardIndex];
     document.getElementById("view-card-border").style.backgroundColor = getCardColor(currentCardIndex);
     document.getElementById("view-card-question").innerText = card.q;
@@ -245,9 +255,16 @@ function setupDeckUI() {
         promptThrobber.style.display = "none";
     };
 
-    document.getElementById("btn-share-deck").onclick = () => {
+    document.getElementById("btn-share-deck").onclick = async () => {
         const url = `${FRONTEND_URL}/?deck_id=${currentDeck._id}`;
+        document.getElementById("deck-share-url").style.display = "block";
+        document.getElementById("deck-share-url").value = url;
         navigator.clipboard.writeText(url);
+        await navigator.share({
+            title: "FlashGen",
+            url: url
+        });
+
     };
 }
 
